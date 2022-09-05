@@ -1,0 +1,120 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1>Testing DB</h1>
+     <a class="btn btn-info" style="padding-bottom:10px;" asp-page="./CreateBook">Add new book</a>
+<table style="border-radius:10px; " class="table table-hover">
+    <thead>
+        <tr style="padding-bottom:20px">
+            <th>User</th>
+            <th>Book</th>
+            <th>Author</th>
+            <th>Actions</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model.Books)
+        {
+
+            <tr style="padding-bottom:20px">
+                <td>@c.User.UserName</td>
+                <td>@c.Title</td>
+                @if (c.BooksAndAuthors == null)
+                {
+                    <td>No author</td>
+                }
+                else
+                {
+                    <td>@c.BooksAndAuthors</td>
+                }
+               
+                <td>
+
+
+                    <a class="btn btn-info" asp-page="./DetailsBook" asp-route-id="@c.BookId">Detail</a>
+                     <a class="btn btn-info" asp-page="./DeleteBook" asp-route-id="@c.BookId">Delete</a>
+                      <a class="btn btn-info" asp-page="./EditBook" asp-route-id="@c.BookId">Edit</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<table style="border-radius:10px; " class="table table-hover">
+    <thead>
+        <tr style="padding-bottom:20px">
+            
+            <th>Author</th>
+            <th>Books</th>
+            <th>Actions</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model.Author)
+        {
+
+            <tr style="padding-bottom:20px">
+            
+                <td>@c.AuthorName</td>
+                @if (c.BooksAndAuthors == null)
+                {
+                    <td>No author</td>
+                }
+                else
+                {
+                    <td>@c.BooksAndAuthors</td>
+                }
+               
+                <td>
+
+
+                    <a class="btn btn-info" asp-page="./DetailsBook" asp-route-id="@c.AuthorId>Detail</a>
+                     <a class="btn btn-info" asp-page="./DeleteBook" asp-route-id="@c.AuthorId">Delete</a>
+                      <a class="btn btn-info" asp-page="./EditBook" asp-route-id="@c.AuthorId">Edit</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+
+<table style="border-radius:10px; " class="table table-hover">
+    <thead>
+        <tr style="padding-bottom:20px">
+            
+            <th>Author</th>
+            <th>Books</th>
+            <th>Actions</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model.BooksAndAuthors)
+        {
+
+            <tr style="padding-bottom:20px">
+            
+                <td>@c.Author</td>
+                <td>@c.Book</td>
+               
+                <td>
+
+
+                    <a class="btn btn-info" asp-page="./DetailsBook" asp-route-id="@c.AuthorId>Detail</a>
+                     <a class="btn btn-info" asp-page="./DeleteBook" asp-route-id="@c.AuthorId">Delete</a>
+                      <a class="btn btn-info" asp-page="./EditBook" asp-route-id="@c.AuthorId">Edit</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+</div>
