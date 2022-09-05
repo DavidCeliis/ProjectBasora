@@ -14,6 +14,9 @@ namespace ProjectBasora.Models
         public string ISBN { get; set; }
         [Required]
         public string ContentType { get; set; } //(MIME type)
+        public int NumberPages { get; set; }
+        public int Weight { get; set; }
+        public string BookBinding { get; set; }
         public ICollection<Thumbnail> Thumbnails { get; set; }
         public ICollection<UserReview_bookCondition> UserReview_bookCondition { get; set; }
         public ICollection<UserReview_book> UserReview_book { get; set; }

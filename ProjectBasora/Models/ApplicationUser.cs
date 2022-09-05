@@ -40,6 +40,10 @@ namespace ProjectBasora.Models
         public int PostCode { get; set; }
       
         public bool Vertification { get; set; } = false;
+        public string UserType { get; set; } 
+        public string IDtype { get; set; }
+        public int IDnumber { get; set; }
+        public int Limit { get; set; }  
         //public ICollection<UserReview_user> UserReview_user { get; set; }
         //public ICollection<Borrowing>? Borrowings { get; set; } = null;
     }
