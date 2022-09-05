@@ -7,14 +7,10 @@ namespace ProjectBasora.Models
     {
         [Key]
         public int RBookId { get; set; }
-        //public Book Book { get; set; }
-      
-        public int BookId { get; set; }
         public int Rating { get; set; }
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
         public DateTime Created { get; set; }
-        //[ForeignKey("UserId")]
-        //public ApplicationUser User { get; set; }
-        //public string UserId { get; set; }
+        public ICollection<UserReview_bookRelation>? UserReview_bookRelation { get; set; }
+ 
     }
 }
