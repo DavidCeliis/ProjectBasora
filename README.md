@@ -15,4 +15,5 @@ Verification</h2>
 <h2>Logbook and user system</h2>
 <p>It can be handled by ASP.NET Identity</p>
 <h2>Database tables</h2>
+<small>Some parts have been added lately, they're not icluded (yet)</small>
 <img src="https://user-images.githubusercontent.com/71689781/188394797-03232a1d-75b5-459e-b46a-eb16602121cd.jpg">
