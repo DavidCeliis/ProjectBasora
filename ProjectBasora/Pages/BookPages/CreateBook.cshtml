@@ -1,0 +1,74 @@
+﻿@page
+@model ProjectBasora.Pages.BookPages.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Book</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Book.Title" class="control-label"></label>
+                <input asp-for="Book.Title" class="form-control" />
+                <span asp-validation-for="Book.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Book.ISBN" class="control-label"></label>
+                <input asp-for="Book.ISBN" class="form-control" />
+                <span asp-validation-for="Book.ISBN" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Book.NumberPages" class="control-label"></label>
+                <input asp-for="Book.NumberPages" class="form-control" />
+                <span asp-validation-for="Book.NumberPages" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Book.Weight" class="control-label"></label>
+                <input asp-for="Book.Weight" class="form-control" />
+                <span asp-validation-for="Book.Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Book.BookBinding" class="control-label"></label>
+                <input asp-for="Book.BookBinding" class="form-control" />
+                <span asp-validation-for="Book.BookBinding" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BooksAndAuthorsNoList.AuthorId" class="control-label"></label>
+                <select asp-for="BooksAndAuthorsNoList.AuthorId" class="form-control" asp-items="ViewBag.AuthorId"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="BooksAndLanguagesNoList.LanguageId" class="control-label"></label>
+                <select asp-for="BooksAndLanguagesNoList.LanguageId" class="form-control" asp-items="ViewBag.LanguageId"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="BooksAndCategoriesNoList.CategoryId" class="control-label"></label>
+                <select asp-for="BooksAndCategoriesNoList.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+            </div>
+               <div class="form-group">
+                    <label asp-for="UploadImage" class="control-label">Image</label>
+                    <input type="file" asp-for="UploadImage" class="form-control-file" multiple required accept=".png,.jpg,.jpeg,.gif" />
+                </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="../Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

@@ -43,11 +43,13 @@ namespace ProjectBasora.Models
        
         
         public string Street { get; set; }
+
         
         public string City { get; set; }
-        
+
         public string State { get; set; }
-       
+        //public List<string>? State = new List<string>();
+
         public int PostCode { get; set; }
       
         public bool Vertification { get; set; } = false;

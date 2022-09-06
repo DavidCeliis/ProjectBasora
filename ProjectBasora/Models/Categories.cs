@@ -14,5 +14,8 @@ namespace ProjectBasora.Models
         [ForeignKey("UserId")]
         public ApplicationUser? User { get; set; }
         public string? UserId { get; set; }
+
+        [ForeignKey("Book")]
+        public Book? BookInclude { get; set; }
     }
 }
