@@ -35,8 +35,13 @@ namespace ProjectBasora.Models
         public ICollection<UserReview_userRelation>? UserReview_userRelation { get; set; }
         [ForeignKey("Author")]
         public Author? AuthorIncludeBooks { get; set; }
+        [ForeignKey("Categories")]
+        public Categories? CategoryInclude { get; set; }
+        [ForeignKey("Languages")]
+        public Languages? LanguageInclude { get; set; }
         public bool Public { get; set; } = true;
         public bool Borrowed { get; set; } = false;
+        public string? fileName { get; set; }
 
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }

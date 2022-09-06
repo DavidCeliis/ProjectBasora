@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectBasora.Data;
 
@@ -11,9 +12,10 @@ using ProjectBasora.Data;
 namespace ProjectBasora.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220906085747_mig8")]
+    partial class mig8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -285,7 +287,7 @@ namespace ProjectBasora.Data.Migrations
                             AmmountOfInTime = 0,
                             AmmountOfdelayed = 0,
                             City = "Madrid",
-                            ConcurrencyStamp = "f0c1443b-32ce-4303-bd8c-ac43a7063dd3",
+                            ConcurrencyStamp = "f5acba12-af72-4ced-b761-800e3df0d116",
                             Email = "davceli019@pslib.cz",
                             EmailConfirmed = false,
                             IDnumber = 1,
@@ -295,7 +297,7 @@ namespace ProjectBasora.Data.Migrations
                             PasswordHash = "",
                             PhoneNumberConfirmed = false,
                             PostCode = 23344,
-                            SecurityStamp = "fdee2e69-c897-45c9-a327-ab800ee03b46",
+                            SecurityStamp = "9ede5a45-47b6-4013-b60d-16678abb0039",
                             State = "Spain",
                             Street = "Gen. Svob",
                             TwoFactorEnabled = false,
@@ -417,9 +419,6 @@ namespace ProjectBasora.Data.Migrations
                     b.Property<int?>("Weight")
                         .HasColumnType("int");
 
-                    b.Property<string>("fileName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("BookId");
 
                     b.HasIndex("Author");
@@ -442,7 +441,7 @@ namespace ProjectBasora.Data.Migrations
                             NumberPages = 224,
                             Public = true,
                             Title = "1984",
-                            UploadedAt = new DateTime(2022, 9, 6, 12, 8, 57, 241, DateTimeKind.Local).AddTicks(9115),
+                            UploadedAt = new DateTime(2022, 9, 6, 10, 57, 46, 207, DateTimeKind.Local).AddTicks(8922),
                             UserId = "owner1"
                         });
                 });

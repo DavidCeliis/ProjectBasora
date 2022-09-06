@@ -6,13 +6,15 @@
 
 <div class="text-center">
     <h1>Testing DB</h1>
-    <a class="btn btn-info" style="padding-bottom:10px;" asp-page="./CreateBook">Add new book</a>
+    <a class="btn btn-info" style="padding-bottom:10px;" asp-page="./BookPages/CreateBook">Add new book</a>
     <table style="border-radius:10px; " class="table table-hover">
         <thead>
             <tr style="padding-bottom:20px">
                 <th>User</th>
                 <th>Book</th>
                 <th>Author</th>
+                <th>Language</th>
+                <th>Category</th>
                 <th>Actions</th>
 
             </tr>
@@ -31,6 +33,22 @@
                     else
                     {
                         <td>@c.AuthorIncludeBooks.AuthorName</td>
+                    }
+                        @if (c.LanguageInclude == null)
+                    {
+                        <td>No Language</td>
+                    }
+                    else
+                    {
+                        <td>@c.LanguageInclude.LanguageName</td>
+                    }
+                           @if (c.CategoryInclude == null)
+                    {
+                        <td>No Category</td>
+                    }
+                    else
+                    {
+                        <td>@c.CategoryInclude.CategoryName</td>
                     }
 
                     <td>

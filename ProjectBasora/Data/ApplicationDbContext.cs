@@ -189,11 +189,13 @@ namespace ProjectBasora.Data
             mb.Entity<Author>().HasData(new Author { AuthorId = 5, AuthorName = "Harold Robbins" });
             mb.Entity<Author>().HasData(new Author { AuthorId = 6, AuthorName = "George Orwell" });
 
-            mb.Entity<ApplicationUser>().HasData(new ApplicationUser { UserSurname ="David", UserLastname = "Celis", UserNick = "OWNERcelis", Street="Gen. Svob", City="Madrid", State="Spain", PostCode= 23344, Vertification = true, UserType="OWNER", IDtype="", IDnumber= 1, Limit= 10000, UserName ="davceli019@pslib.cz", Email= "davceli019@pslib.cz", PasswordHash="", Id="owner1" });
+            mb.Entity<ApplicationUser>().HasData(new ApplicationUser { UserSurname ="David", UserLastname = "Celis", UserNick = "OWNERcelis", Street="Gen. Svob", City="Madrid", State = "Spain" , PostCode= 23344, Vertification = true, UserType="OWNER", IDtype="", IDnumber= 1, Limit= 10000, UserName ="davceli019@pslib.cz", Email= "davceli019@pslib.cz", PasswordHash="", Id="owner1" });
 
             mb.Entity<Book>().HasData(new Book { BookId = 1, Title = "1984", ISBN= "9780140862539", Public = true, Borrowed = false, UploadedAt = DateTime.Now, BookBinding = "soft", NumberPages = 224, UserId= "owner1" });
 
             mb.Entity<BooksAndAuthors>().HasData(new BooksAndAuthors { AuthorId = 6, BookId =1, UserId ="owner1" });
+
+           
 
 
 

@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -116,6 +117,8 @@ namespace ProjectBasora.Areas.Identity.Pages.Account
             public string State { get; set; }
             [Required]
             public int PostCode { get; set; }
+    
+
         }
 
 
@@ -124,13 +127,33 @@ namespace ProjectBasora.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
-
+        public static List<string> CountryList()
+        {
+            // Creating List
+            List<string> CultureList = new List<string>();
+            // Getting the specific cultureInfo from CulureInfo Class
+            CultureInfo[] getCultureInfo = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
+            foreach (CultureInfo getCulture in getCultureInfo)
+            {
+                RegionInfo GetRegionInfo = new RegionInfo(getCulture.LCID);
+                // adding each country name into the arraylist
+                if (!(CultureList.Contains(GetRegionInfo.EnglishName)))
+                {
+                }
+                CultureList.Add(GetRegionInfo.EnglishName);
+            }
+            // sorting array by using sort method
+            CultureList.Sort();
+            // return the country list
+            return CultureList;
+        }  
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+               
                 var user = new ApplicationUser { UserNick = Input.Nick, City = Input.City, PostCode = Input.PostCode, Street = Input.Street, State = Input.State, UserLastname = Input.UserLastname, UserSurname = Input.UserSurname };
                 //var user = CreateUser();
 
