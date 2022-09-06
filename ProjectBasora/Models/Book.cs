@@ -33,6 +33,8 @@ namespace ProjectBasora.Models
         public ICollection<UserReview_bookConditionRelation>? UserReview_bookConditionRelation { get; set; }
         public ICollection<UserReview_bookRelation>? UserReview_bookRelation { get; set; }
         public ICollection<UserReview_userRelation>? UserReview_userRelation { get; set; }
+        [ForeignKey("Author")]
+        public Author? AuthorIncludeBooks { get; set; }
         public bool Public { get; set; } = true;
         public bool Borrowed { get; set; } = false;
 
