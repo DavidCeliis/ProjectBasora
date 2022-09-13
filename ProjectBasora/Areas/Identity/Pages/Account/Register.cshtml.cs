@@ -17,8 +17,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using ProjectBasora.Data;
 using ProjectBasora.Models;
 
 namespace ProjectBasora.Areas.Identity.Pages.Account
@@ -31,13 +33,15 @@ namespace ProjectBasora.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _context;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -45,6 +49,7 @@ namespace ProjectBasora.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         /// <summary>
@@ -53,7 +58,9 @@ namespace ProjectBasora.Areas.Identity.Pages.Account
         /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
-
+    
+        //[BindProperty]
+        //public SelectModel Select { get; set; }
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -113,40 +120,40 @@ namespace ProjectBasora.Areas.Identity.Pages.Account
             public string Street { get; set; }
             [Required]
             public string City { get; set; }
-            [Required]
-            public string State { get; set; }
+         
             [Required]
             public int PostCode { get; set; }
-    
+            [Required]
+            public string State { get; set; }
 
         }
-
-
+     
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            //ViewData["Id"] = new SelectList(_context.Countries, "Id", "Name");
         }
-        public static List<string> CountryList()
-        {
-            // Creating List
-            List<string> CultureList = new List<string>();
-            // Getting the specific cultureInfo from CulureInfo Class
-            CultureInfo[] getCultureInfo = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
-            foreach (CultureInfo getCulture in getCultureInfo)
-            {
-                RegionInfo GetRegionInfo = new RegionInfo(getCulture.LCID);
-                // adding each country name into the arraylist
-                if (!(CultureList.Contains(GetRegionInfo.EnglishName)))
-                {
-                }
-                CultureList.Add(GetRegionInfo.EnglishName);
-            }
-            // sorting array by using sort method
-            CultureList.Sort();
-            // return the country list
-            return CultureList;
-        }  
+        //public static List<string> CountryList()
+        //{
+        //    // Creating List
+        //    List<string> CultureList = new List<string>();
+        //    // Getting the specific cultureInfo from CulureInfo Class
+        //    CultureInfo[] getCultureInfo = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
+        //    foreach (CultureInfo getCulture in getCultureInfo)
+        //    {
+        //        RegionInfo GetRegionInfo = new RegionInfo(getCulture.LCID);
+        //        // adding each country name into the arraylist
+        //        if (!(CultureList.Contains(GetRegionInfo.EnglishName)))
+        //        {
+        //        }
+        //        CultureList.Add(GetRegionInfo.EnglishName);
+        //    }
+        //    // sorting array by using sort method
+        //    CultureList.Sort();
+        //    // return the country list
+        //    return CultureList;
+        //}  
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -154,7 +161,7 @@ namespace ProjectBasora.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                
-                var user = new ApplicationUser { UserNick = Input.Nick, City = Input.City, PostCode = Input.PostCode, Street = Input.Street, State = Input.State, UserLastname = Input.UserLastname, UserSurname = Input.UserSurname };
+                var user = new ApplicationUser { UserNick = Input.Nick, City = Input.City, PostCode = Input.PostCode, Street = Input.Street, State = Input.State  , UserLastname = Input.UserLastname, UserSurname = Input.UserSurname };
                 //var user = CreateUser();
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);

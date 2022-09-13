@@ -1,141 +1,52 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home";
 }
 
 <div class="text-center">
-    <h1>Testing DB</h1>
-    <a class="btn btn-info" style="padding-bottom:10px;" asp-page="./BookPages/CreateBook">Add new book</a>
-    <table style="border-radius:10px; " class="table table-hover">
-        <thead>
-            <tr style="padding-bottom:20px">
-                <th>User</th>
-                <th>Book</th>
-                <th>Author</th>
-                <th>Language</th>
-                <th>Category</th>
-                <th>Actions</th>
+    <h1>Available to Borrow</h1>
+    
+    <form >
+    <p>
+        Title: <input type="text" asp-for="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+    </form>
 
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var c in Model.Books)
+    @if (Model.Books.Count > 0)
+    {
+        <div class="grid-container">
+            @foreach (var f in Model.Books)
             {
-
-                <tr style="padding-bottom:20px">
-                    <td>@c.User.UserName</td>
-                    <td>@c.Title</td>
-                    @if (c.AuthorIncludeBooks == null)
-                    {
-                        <td>No author</td>
-                    }
-                    else
-                    {
-                        <td>@c.AuthorIncludeBooks.AuthorName</td>
-                    }
-                        @if (c.LanguageInclude == null)
-                    {
-                        <td>No Language</td>
-                    }
-                    else
-                    {
-                        <td>@c.LanguageInclude.LanguageName</td>
-                    }
-                           @if (c.CategoryInclude == null)
-                    {
-                        <td>No Category</td>
-                    }
-                    else
-                    {
-                        <td>@c.CategoryInclude.CategoryName</td>
-                    }
-
-                    <td>
+                @if (f.fileName != null)
+                {
 
 
-                        <a class="btn btn-info" asp-page="./DetailsBook" asp-route-id="@c.BookId">Detail</a>
-                        <a class="btn btn-info" asp-page="./DeleteBook" asp-route-id="@c.BookId">Delete</a>
-                        <a class="btn btn-info" asp-page="./EditBook" asp-route-id="@c.BookId">Edit</a>
-                    </td>
-                </tr>
+                    <div class="grid-item gridcontainer">
+                        <a asp-page="./BookPages/DetailsBook" asp-route-id="@f.BookId"><img class="PICthumbnail" src="@Url.Page("/Index", "Thumbnail", new { filename = f.BookId })" /></a>
+                        <p style="text-align:center; padding-top:5px">@f.Title</p>
+                        <small>Uploaded by: <strong>@f.User.UserNick</strong></small>
+                    </div>
+                }
+                else
+                {
+                    <div class="grid-item gridcontainer">
+                        <a asp-page="./BookPages/DetailsBook" asp-route-id="@f.BookId"> <img class="PICthumbnail" src="/images/no-image-available.jpg" />  </a>
+                        <p style="text-align:center;">@f.Title</p>
+                        <small>Uploaded by: <strong>@f.User.UserNick</strong></small>
+                    </div>
+                }
+
             }
 
-        </tbody>
-    </table>
+        </div>
 
-    <table style="border-radius:10px; " class="table table-hover">
-        <thead>
-            <tr style="padding-bottom:20px">
-
-                <th>Author</th>
-                <th>Last added book</th>
-                <th>Actions</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var c in Model.Author)
-            {
-
-                <tr style="padding-bottom:20px">
-
-                    <td>@c.AuthorName</td>
-                    @if (c.BookIncludeAuthors == null)
-                    {
-                        <td>No books added yet</td>
-                    }
-                    else
-                    {
-
-                        <td>@c.BookIncludeAuthors.Title</td>
-
-
-                    }
-
-                    <td>
-
-
-                        <a class="btn btn-info" asp-page="./DetailsBook" asp-route-id="@c.AuthorId>Detail</a>
-                        <a class="btn btn-info" asp-page="./DeleteBook" asp-route-id="@c.AuthorId">Delete</a>
-                        <a class="btn btn-info" asp-page="./EditBook" asp-route-id="@c.AuthorId">Edit</a>
-                    </td>
-                </tr>
-            }
-
-        </tbody>
-    </table>
-
-
-    <table style="border-radius:10px; " class="table table-hover">
-        <thead>
-            <tr style="padding-bottom:20px">
-
-                <th>Author</th>
-                <th>Books</th>
-                <th>Actions</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var c in Model.BooksAndAuthors)
-            {
-
-                <tr style="padding-bottom:20px">
-
-                    <td>@c.Author.AuthorName</td>
-                    <td>@c.Book.Title</td>
-
-                    <td>
-
-
-                        <a class="btn btn-info" asp-page="./DetailsBook" asp-route-id="@c.AuthorId>Detail</a>
-                    <a class="btn btn-info" asp-page="./DeleteBook" asp-route-id="@c.AuthorId">Delete</a>
-                        <a class="btn btn-info" asp-page="./EditBook" asp-route-id="@c.AuthorId">Edit</a>
-                    </td>
-                </tr>
-            }
-
-        </tbody>
-    </table>
-</div>
+    }
+  
+    else
+    {
+          <img style="width:200px; height:200px; text-align:center" src="/images/nothing-found.png" />
+        <h1 style="text-align:center; color:black;">Try something else...</h1>
+       
+    }

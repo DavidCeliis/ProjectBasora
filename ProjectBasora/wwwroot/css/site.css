@@ -16,3 +16,200 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.button {
+    background-color: #4CAF50;
+    border: 2px;
+    border-color: darkgreen;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition-duration: 0.4s;
+}
+
+    .button:hover {
+        background-color: darkgreen;
+        color: white;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+.buttonDanger {
+    background-color: red;
+}
+
+    .buttonDanger:hover {
+        background-color: darkred;
+    }
+
+.buttonBlue {
+    background-color: Highlight;
+}
+
+    .buttonBlue:hover {
+        background-color: darkblue;
+    }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    padding: 5px;
+}
+
+.grid-item {
+    padding: 5px;
+   
+    text-align: center;
+}
+
+.PICthumbnail {
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+}
+
+.gridcontainer {
+    position: relative;
+    text-align: center;
+   
+
+}
+
+.bottom-left {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+}
+
+.bottom-left2 {
+    position: absolute;
+    bottom: 30px;
+    left: 80px;
+}
+
+.bottom-right {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+}
+
+.bottom-right2 {
+    position: absolute;
+    bottom: 30px;
+    right: 80px;
+}
+
+p {
+    color: black
+}
+
+.tooltips {
+    position: relative;
+    display: inline-block;
+}
+
+    .tooltips .tooltiptext {
+        visibility: hidden;
+        width: 60px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        font-size: small;
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -30px;
+    }
+
+    .tooltips:hover .tooltiptext {
+        visibility: visible;
+    }
+
+.divbackground {
+    background-color: lightgray;
+    border-radius: 10px;
+}
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}

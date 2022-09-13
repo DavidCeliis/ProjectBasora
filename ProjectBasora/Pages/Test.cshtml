@@ -1,0 +1,170 @@
+﻿@page
+@model TestModel
+@{
+    ViewData["Title"] = "Debug";
+}
+
+<div class="text-center">
+    <h1>Testing DB</h1>
+    <a class="btn btn-info" style="padding-bottom:10px;" asp-page="./BookPages/CreateBook">Add new book</a>
+    <table style="border-radius:10px; " class="table table-hover">
+        <thead>
+            <tr style="padding-bottom:20px">
+                <th>User</th>
+                <th>BookID</th>
+                <th>Book</th>
+                <th>Author</th>
+                <th>Language</th>
+                <th>Category</th>
+                <th>Borrowed</th>
+                <th>Image</th>
+                <th>Actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model.Books)
+            {
+
+                <tr style="padding-bottom:20px">
+                    <td>@c.User.UserName</td>
+                    <td>@c.BookId</td>
+                    <td>@c.Title</td>
+                    @if (c.AuthorIncludeBooks == null)
+                    {
+                        <td>No author</td>
+                    }
+                    else
+                    {
+                        <td>@c.AuthorIncludeBooks.AuthorName</td>
+                    }
+               
+                        @if (c.LanguageInclude == null)
+                    {
+                        <td>No Language</td>
+                    }
+                    else
+                    {
+                        <td>@c.LanguageInclude.LanguageName</td>
+                    }
+                           @if (c.CategoryInclude == null)
+                    {
+                        <td>No Category</td>
+                    }
+                    else
+                    {
+                        <td>@c.CategoryInclude.CategoryName</td>
+                    }
+                    <td>@c.Borrowed</td>
+                    <td>
+                        @if(c.fileName != null)
+                        {
+                            <a asp-page="./BookPages/DetailsBook" asp-route-id="@c.BookId"><img style="width:100px; height:100px;" src="@Url.Page("./Index", "Thumbnail", new { filename = c.BookId })" /></a>
+                        }
+                        else
+                        {
+                            <img  style="width:100px; height:100px;"src="/images/no-image-available.jpg"/>
+                           
+                        }
+                    </td>
+                    <td>
+
+                        <a style="margin-bottom:5px" class="btn btn-info" asp-page="./BookPages/DetailsBook" asp-route-id="@c.BookId">Detail</a>
+                        <a style="margin-bottom:5px" class="btn btn-info" asp-page="./BookPages/DeleteBook" asp-route-id="@c.BookId">Delete</a>
+                        <a  style="margin-bottom:5px" class="btn btn-info" asp-page="./BookPages/EditBook" asp-route-id="@c.BookId">Edit</a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+    <table style="border-radius:10px; " class="table table-hover">
+        <thead>
+            <tr style="padding-bottom:20px">
+
+                <th>Author</th>
+                <th>Last added book</th>
+                <th>Actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model.Author)
+            {
+
+                <tr style="padding-bottom:20px">
+
+                    <td>@c.AuthorName</td>
+                    @if (c.BookIncludeAuthors == null)
+                    {
+                        <td>No books added yet</td>
+                    }
+                    else
+                    {
+
+                        <td>@c.BookIncludeAuthors.Title</td>
+
+
+                    }
+
+                    <td>
+
+
+                        <a class="btn btn-info" asp-page="./DetailsBook" asp-route-id="@c.AuthorId>Detail</a>
+                        <a class="btn btn-info" asp-page="./DeleteBook" asp-route-id="@c.AuthorId">Delete</a>
+                        <a class="btn btn-info" asp-page="./EditBook" asp-route-id="@c.AuthorId">Edit</a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+    <table style="border-radius:10px; " class="table table-hover">
+        <thead>
+            <tr style="padding-bottom:20px">
+                <th>User</th>
+                <th>Book</th>
+                <th>Author</th>
+                <th>ISBN</th>
+                <th>Image</th>
+                <th>Actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model.BooksAndAuthors)
+            {
+
+                <tr style="padding-bottom:20px">
+                    <td>@c.Book.User.UserNick</td>
+                    <td>@c.Book.Title</td>
+                    <td>@c.Author.AuthorName</td>
+                    
+                    <td>@c.Book.ISBN</td>
+                        <td>
+                        @if(c.Book.fileName != null)
+                        {
+                            <a asp-page-handler="thumbnail" asp-route-filename="@c.Book.BookId" asp-route-type="1"><img style="width:100px; height:100px;" src="@Url.Page("./Index", "Thumbnail", new { filename = c.Book.BookId })" /></a>
+                        }
+                        else
+                        {
+                            <img  style="width:100px; height:100px;"src="/images/no-image-available.jpg"/>
+                           
+                        }
+                    </td>
+                    <td>
+
+
+                        <a class="btn btn-info" asp-page="./DetailsBook" asp-route-id="@c.AuthorId>Detail</a>
+                    <a class="btn btn-info" asp-page="./DeleteBook" asp-route-id="@c.AuthorId">Delete</a>
+                        <a class="btn btn-info" asp-page="./EditBook" asp-route-id="@c.AuthorId">Edit</a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

@@ -28,19 +28,22 @@ namespace ProjectBasora.Pages.BookPages
         private IConfiguration _configuration;
         private int _squareSize;
         private int _sameAspectRatioHeigth;
-        public IList<Book> Books { get; set; }
-        public IList<Author> Author { get; set; }
-        public Author Authors { get; set; }
-        public IList<Categories> Category { get; set; }
-        public IList<Languages> Language { get; set; }
-        public IList<BooksAndAuthors> BooksAndAuthors { get; set; }
-        public IList<BooksAndCategories> BooksAndCategories { get; set; }
-        public IList<BooksAndLanguages> BooksAndLanguages { get; set; }
-        public BooksAndAuthors BooksAndAuthorsNoList { get; set; }
-        public BooksAndCategories BooksAndCategoriesNoList { get; set; }
-        public BooksAndLanguages BooksAndLanguagesNoList { get; set; }
+        //public IList<Book> Books { get; set; }
+        //public IList<Author> Author { get; set; }
+        //public Author Authors { get; set; }
+        //public IList<Categories> Category { get; set; }
+        //public IList<Languages> Language { get; set; }
+        //public IList<BooksAndAuthors> BooksAndAuthors { get; set; }
+        //public IList<BooksAndCategories> BooksAndCategories { get; set; }
+        //public IList<BooksAndLanguages> BooksAndLanguages { get; set; }
         [BindProperty]
-        public Book Book { get; set; } = default!;
+        public BooksAndAuthors BooksAndAuthors { get; set; }
+        [BindProperty]
+        public BooksAndCategories BooksAndCategories { get; set; }
+        [BindProperty]
+        public BooksAndLanguages BooksAndLanguages { get; set; }
+
+        public Book Book { get; set; } 
         [TempData]
         public string SuccessMessage { get; set; }
         [TempData]
@@ -49,7 +52,20 @@ namespace ProjectBasora.Pages.BookPages
 
 
         [BindProperty]
-        public bool Public { get; set; }
+        public bool Public { get; set; } = true;
+        [BindProperty]
+        public string Title { get; set; }
+        [BindProperty]
+        public int Weight{ get; set; }
+        [BindProperty]
+        public string ISBN { get; set; }
+        [BindProperty]
+        public bool Borrowed { get; set; } = false;
+        [BindProperty]
+        public string BookBinding { get; set; }
+        [BindProperty]
+        public int NumberPages { get; set; }
+        public int BookId { get; set; }
         public ICollection<IFormFile> UploadImage { get; set; }
 
         public CreateModel(IWebHostEnvironment environment, ApplicationDbContext context, IConfiguration configuration)
@@ -65,88 +81,90 @@ namespace ProjectBasora.Pages.BookPages
 
         public async Task OnGetAsync(int Idbook)
         {
+          
             var userId = User.Claims.Where(cc => cc.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+         
             ViewData["AuthorId"] = new SelectList(_context.Authors, "AuthorId", "AuthorName");
             ViewData["LanguageId"] = new SelectList(_context.Languages, "LanguageId", "LanguageName");
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
-            ViewData["BookId"] = new SelectList(_context.Books, "BookId", "ContentType", "Title");
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId");
-          
-            Books = await _context.Books
-                .Include(s => s.User)
-                .Include(s => s.BooksAndAuthors)
-                .Include(s => s.BooksAndCategories)
-                .Include(s => s.BooksAndLanguages)
-                .ToListAsync();
-            Author = await _context.Authors
-                .Include(s => s.BooksAndAuthors)
-                .ToListAsync();
-            Category = await _context.Categories
-                .Include(s => s.BooksAndCategories)
-                .ToListAsync();
-            Language = await _context.Languages
-               .Include(s => s.BooksAndLanguages)
-               .ToListAsync();
+            ////ViewData["BookId"] = new SelectList(_context.Books, "BookId", "ContentType", "Title");
+            //ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId");
 
-            BooksAndAuthors = await _context.BooksAndAuthors
-                .Include(s => s.Author)
-                .Include(s => s.Book)
-                .OrderBy(s => s.BookId)
-                .ToListAsync();
-            BooksAndLanguages = await _context.BooksAndLanguages
-                .Include(s => s.Languages)
-                .Include(s => s.Book)
-                .OrderBy(s => s.BookId)
-                .ToListAsync();
-            BooksAndCategories = await _context.BooksAndCategories
-                 .Include(s => s.Categories)
-                 .Include(s => s.Book)
-                 .OrderBy(s => s.BookId)
-                 .ToListAsync();
+            //Books = await _context.Books
+            //    .Include(s => s.User)
+            //    .Include(s => s.BooksAndAuthors)
+            //    .Include(s => s.BooksAndCategories)
+            //    .Include(s => s.BooksAndLanguages)
+            //    .ToListAsync();
+            //Author = await _context.Authors
+            //    .Include(s => s.BooksAndAuthors)
+            //    .ToListAsync();
+            //Category = await _context.Categories
+            //    .Include(s => s.BooksAndCategories)
+            //    .ToListAsync();
+            //Language = await _context.Languages
+            //   .Include(s => s.BooksAndLanguages)
+            //   .ToListAsync();
 
-
-            foreach (Author i in _context.Authors)
-            {
-                if (BooksAndAuthors.FirstOrDefault(c => c.AuthorId == i.AuthorId) == null)
-                {
-                    i.BookIncludeAuthors = null;
-                }
-                else
-                {
-                    BooksAndAuthorsNoList = BooksAndAuthors.First(c => c.AuthorId == i.AuthorId);
-                    i.BookIncludeAuthors = BooksAndAuthorsNoList.Book;
-                }
+            //BooksAndAuthors = await _context.BooksAndAuthors
+            //    .Include(s => s.Author)
+            //    .Include(s => s.Book)
+            //    .OrderBy(s => s.BookId)
+            //    .ToListAsync();
+            //BooksAndLanguages = await _context.BooksAndLanguages
+            //    .Include(s => s.Languages)
+            //    .Include(s => s.Book)
+            //    .OrderBy(s => s.BookId)
+            //    .ToListAsync();
+            //BooksAndCategories = await _context.BooksAndCategories
+            //     .Include(s => s.Categories)
+            //     .Include(s => s.Book)
+            //     .OrderBy(s => s.BookId)
+            //     .ToListAsync();
 
 
-            }
-            foreach (Languages i in _context.Languages)
-            {
-                if (BooksAndLanguages.FirstOrDefault(c => c.LanguageId == i.LanguageId) == null)
-                {
-                    i.BookInclude = null;
-                }
-                else
-                {
-                    BooksAndLanguagesNoList = BooksAndLanguages.First(c => c.LanguageId == i.LanguageId);
-                    i.BookInclude = BooksAndLanguagesNoList.Book;
-                }
+            //foreach (Author i in _context.Authors)
+            //{
+            //    if (BooksAndAuthors.FirstOrDefault(c => c.AuthorId == i.AuthorId) == null)
+            //    {
+            //        i.BookIncludeAuthors = null;
+            //    }
+            //    else
+            //    {
+            //        BooksAndAuthorsNoList = BooksAndAuthors.First(c => c.AuthorId == i.AuthorId);
+            //        i.BookIncludeAuthors = BooksAndAuthorsNoList.Book;
+            //    }
 
 
-            }
-            foreach (Categories i in _context.Categories)
-            {
-                if (BooksAndCategories.FirstOrDefault(c => c.CategoryId == i.CategoryId) == null)
-                {
-                    i.BookInclude = null;
-                }
-                else
-                {
-                    BooksAndCategoriesNoList = BooksAndCategories.First(c => c.CategoryId == i.CategoryId);
-                    i.BookInclude = BooksAndCategoriesNoList.Book;
-                }
+            //}
+            //foreach (Languages i in _context.Languages)
+            //{
+            //    if (BooksAndLanguages.FirstOrDefault(c => c.LanguageId == i.LanguageId) == null)
+            //    {
+            //        i.BookInclude = null;
+            //    }
+            //    else
+            //    {
+            //        BooksAndLanguagesNoList = BooksAndLanguages.First(c => c.LanguageId == i.LanguageId);
+            //        i.BookInclude = BooksAndLanguagesNoList.Book;
+            //    }
 
 
-            }
+            //}
+            //foreach (Categories i in _context.Categories)
+            //{
+            //    if (BooksAndCategories.FirstOrDefault(c => c.CategoryId == i.CategoryId) == null)
+            //    {
+            //        i.BookInclude = null;
+            //    }
+            //    else
+            //    {
+            //        BooksAndCategoriesNoList = BooksAndCategories.First(c => c.CategoryId == i.CategoryId);
+            //        i.BookInclude = BooksAndCategoriesNoList.Book;
+            //    }
+
+
+            //}
             _context.SaveChanges();
 
         }
@@ -156,55 +174,36 @@ namespace ProjectBasora.Pages.BookPages
 
         public async Task<IActionResult> OnPostAsync()
         {
+
             int successfulProcessing = 0;
             int failedProcessing = 0;
-            if (!ModelState.IsValid || _context.Books == null || Book == null)
-            {
-                return Page();
-            }
+            //if (!ModelState.IsValid || _context.Books == null || Book == null)
+            //{
+            //    return Page();
+            //}
             var userId = User.Claims.Where(cc => cc.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
             //Book book = new Book { Title = Book.Title, UserId = userId, Borrowed = false, UploadedAt= DateTime.Now };
+            //BookId = _context.Books.Where(f => f.BookId == BookId & f.UserId == userId).FirstOrDefault().BookId;
 
-            IfExist = _context.BooksAndAuthors.Contains(BooksAndAuthorsNoList);
-            if (IfExist)
-            {
-                ErrorMessage = "Exists";
-               
-            }
-            _context.BooksAndAuthors.Add(BooksAndAuthorsNoList);
-        
-            SuccessMessage = "Author Added";
-
-          
-            _context.BooksAndLanguages.Add(BooksAndLanguagesNoList);
-        
-            SuccessMessage = "Language Added";
-
-            _context.BooksAndCategories.Add(BooksAndCategoriesNoList);
-            
-            SuccessMessage = "Category Added";
-            await _context.SaveChangesAsync();
             foreach (var bookUpload in UploadImage) // pro každý nahrávaný soubor
             {
                 Book book = new Book // vytvoříme záznam
                 {
-                    Title = Book.Title,
-                    AuthorIncludeBooks = Book.AuthorIncludeBooks,
-                    LanguageInclude = Book.LanguageInclude,
-                    CategoryInclude = Book.CategoryInclude,
-                    
+                   
+                    Title = Title,
                     fileName = bookUpload.FileName,
                     UserId = userId,
                     UploadedAt = DateTime.Now,
                     ContentType = bookUpload.ContentType,
                     Public = Public = true,
-                    BookBinding = Book.BookBinding,
-                    ISBN = Book.ISBN,
-                    NumberPages = Book.NumberPages,
-                    Weight = Book.Weight,
-                    Borrowed = Book.Borrowed = false,
+                    BookBinding = BookBinding,
+                    ISBN = ISBN,
+                    NumberPages = NumberPages,
+                    Weight = Weight,
+                    Borrowed = Borrowed = false,
 
                 };
+               
                 if (bookUpload.ContentType.StartsWith("image")) // je soubor obrázek?
                 {
                     book.Thumbnails = new List<Thumbnail>();
@@ -265,18 +264,29 @@ namespace ProjectBasora.Pages.BookPages
                 }
             }
 
-            return RedirectToPage("/Index");
+            //_context.BooksAndAuthors.Add(BooksAndAuthors);
+            //_context.BooksAndLanguages.Add(BooksAndLanguages);
+            //_context.BooksAndCategories.Add(BooksAndCategories);
+
+            //SuccessMessage = "Added";
+           
+          
+            await _context.SaveChangesAsync();
+            //var bookid = _context.Books.Find().BookId;
+             return RedirectToPage("./Index");
+            //return RedirectToPage("/CreateConnections?bookId=" + bookid);
         }
+
         public IActionResult OnGetDownload(string bookname)
         {
             var fullName = Path.Combine(_environment.ContentRootPath, "Uploads", bookname);
-            if (System.IO.File.Exists(bookname)) // existuje soubor na disku?
+            if (System.IO.File.Exists(bookname))
             {
                 var book = _context.Books.Find(Guid.Parse(bookname));
-                if (book != null) // je soubor v databázi?
+                if (book != null) 
                 {
                     return PhysicalFile(fullName, book.ContentType, book.fileName);
-                    // vrať ho zpátky pod původním názvem a typem
+                
                 }
                 else
                 {

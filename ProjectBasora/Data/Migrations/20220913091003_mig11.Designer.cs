@@ -12,8 +12,8 @@ using ProjectBasora.Data;
 namespace ProjectBasora.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220906081329_mig7")]
-    partial class mig7
+    [Migration("20220913091003_mig11")]
+    partial class mig11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -169,13 +169,13 @@ namespace ProjectBasora.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("AmmountOfActions")
+                    b.Property<int?>("AmmountOfActions")
                         .HasColumnType("int");
 
-                    b.Property<int>("AmmountOfInTime")
+                    b.Property<int?>("AmmountOfInTime")
                         .HasColumnType("int");
 
-                    b.Property<int>("AmmountOfdelayed")
+                    b.Property<int?>("AmmountOfdelayed")
                         .HasColumnType("int");
 
                     b.Property<string>("City")
@@ -193,14 +193,13 @@ namespace ProjectBasora.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int>("IDnumber")
+                    b.Property<int?>("IDnumber")
                         .HasColumnType("int");
 
                     b.Property<string>("IDtype")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Limit")
+                    b.Property<int?>("Limit")
                         .HasColumnType("int");
 
                     b.Property<bool>("LockoutEnabled")
@@ -260,10 +259,9 @@ namespace ProjectBasora.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Vertification")
+                    b.Property<bool?>("Vertification")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -283,11 +281,8 @@ namespace ProjectBasora.Data.Migrations
                         {
                             Id = "owner1",
                             AccessFailedCount = 0,
-                            AmmountOfActions = 0,
-                            AmmountOfInTime = 0,
-                            AmmountOfdelayed = 0,
                             City = "Madrid",
-                            ConcurrencyStamp = "511c81fc-7005-4a12-96a4-f557ad189268",
+                            ConcurrencyStamp = "bb81e854-732d-4aa6-9479-cd5e6921143a",
                             Email = "davceli019@pslib.cz",
                             EmailConfirmed = false,
                             IDnumber = 1,
@@ -297,7 +292,7 @@ namespace ProjectBasora.Data.Migrations
                             PasswordHash = "",
                             PhoneNumberConfirmed = false,
                             PostCode = 23344,
-                            SecurityStamp = "4611fb4d-01bd-4ebf-85a8-a980c0d39c3a",
+                            SecurityStamp = "5d7ee4d6-aefa-4a0a-8fd9-5fa50bdc22c4",
                             State = "Spain",
                             Street = "Gen. Svob",
                             TwoFactorEnabled = false,
@@ -386,12 +381,21 @@ namespace ProjectBasora.Data.Migrations
                     b.Property<bool>("Borrowed")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("Categories")
+                        .HasColumnType("int");
+
                     b.Property<string>("ContentType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ISBN")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Languages")
+                        .HasColumnType("int");
 
                     b.Property<int>("NumberPages")
                         .HasColumnType("int");
@@ -413,9 +417,16 @@ namespace ProjectBasora.Data.Migrations
                     b.Property<int?>("Weight")
                         .HasColumnType("int");
 
+                    b.Property<string>("fileName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("BookId");
 
                     b.HasIndex("Author");
+
+                    b.HasIndex("Categories");
+
+                    b.HasIndex("Languages");
 
                     b.HasIndex("UserId");
 
@@ -431,7 +442,7 @@ namespace ProjectBasora.Data.Migrations
                             NumberPages = 224,
                             Public = true,
                             Title = "1984",
-                            UploadedAt = new DateTime(2022, 9, 6, 10, 13, 28, 456, DateTimeKind.Local).AddTicks(3071),
+                            UploadedAt = new DateTime(2022, 9, 13, 11, 10, 2, 662, DateTimeKind.Local).AddTicks(793),
                             UserId = "owner1"
                         });
                 });
@@ -445,7 +456,6 @@ namespace ProjectBasora.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("AuthorId", "BookId");
@@ -542,6 +552,9 @@ namespace ProjectBasora.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
 
+                    b.Property<int?>("Book")
+                        .HasColumnType("int");
+
                     b.Property<string>("CategoryName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -550,6 +563,8 @@ namespace ProjectBasora.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("CategoryId");
+
+                    b.HasIndex("Book");
 
                     b.HasIndex("UserId");
 
@@ -588,6 +603,30 @@ namespace ProjectBasora.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ProjectBasora.Models.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Spain"
+                        });
+                });
+
             modelBuilder.Entity("ProjectBasora.Models.Languages", b =>
                 {
                     b.Property<int>("LanguageId")
@@ -595,6 +634,9 @@ namespace ProjectBasora.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LanguageId"), 1L, 1);
+
+                    b.Property<int?>("Book")
+                        .HasColumnType("int");
 
                     b.Property<string>("LanguageName")
                         .IsRequired()
@@ -604,6 +646,8 @@ namespace ProjectBasora.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("LanguageId");
+
+                    b.HasIndex("Book");
 
                     b.HasIndex("UserId");
 
@@ -674,11 +718,10 @@ namespace ProjectBasora.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SearchId"), 1L, 1);
 
-                    b.Property<string>("FailedS")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool?>("Find")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("SuccesedS")
+                    b.Property<string>("Result")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -701,7 +744,7 @@ namespace ProjectBasora.Data.Migrations
 
                     b.HasKey("BookId", "Type");
 
-                    b.ToTable("Thumbnail");
+                    b.ToTable("Thumbnails");
                 });
 
             modelBuilder.Entity("ProjectBasora.Models.UserAndBorrow", b =>
@@ -952,6 +995,14 @@ namespace ProjectBasora.Data.Migrations
                         .WithMany()
                         .HasForeignKey("Author");
 
+                    b.HasOne("ProjectBasora.Models.Categories", "CategoryInclude")
+                        .WithMany()
+                        .HasForeignKey("Categories");
+
+                    b.HasOne("ProjectBasora.Models.Languages", "LanguageInclude")
+                        .WithMany()
+                        .HasForeignKey("Languages");
+
                     b.HasOne("ProjectBasora.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -959,6 +1010,10 @@ namespace ProjectBasora.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("AuthorIncludeBooks");
+
+                    b.Navigation("CategoryInclude");
+
+                    b.Navigation("LanguageInclude");
 
                     b.Navigation("User");
                 });
@@ -979,9 +1034,7 @@ namespace ProjectBasora.Data.Migrations
 
                     b.HasOne("ProjectBasora.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Author");
 
@@ -1057,18 +1110,30 @@ namespace ProjectBasora.Data.Migrations
 
             modelBuilder.Entity("ProjectBasora.Models.Categories", b =>
                 {
+                    b.HasOne("ProjectBasora.Models.Book", "BookInclude")
+                        .WithMany()
+                        .HasForeignKey("Book");
+
                     b.HasOne("ProjectBasora.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("BookInclude");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("ProjectBasora.Models.Languages", b =>
                 {
+                    b.HasOne("ProjectBasora.Models.Book", "BookInclude")
+                        .WithMany()
+                        .HasForeignKey("Book");
+
                     b.HasOne("ProjectBasora.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("BookInclude");
 
                     b.Navigation("User");
                 });

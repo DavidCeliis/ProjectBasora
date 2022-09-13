@@ -1,30 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjectBasora.Data;
 using ProjectBasora.Models;
-using System.Linq;
 
 namespace ProjectBasora.Pages
 {
-    public class IndexModel : PageModel
+    public class TestModel : PageModel
 
     {
         private IWebHostEnvironment _environment;
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ILogger<TestModel> _logger;
         private readonly ApplicationDbContext _context;
 
-
-        public IndexModel(ILogger<IndexModel> logger, ApplicationDbContext context, IWebHostEnvironment environment)
+        public TestModel(ILogger<TestModel> logger, ApplicationDbContext context, IWebHostEnvironment environment)
         {
             _environment = environment;
             _logger = logger;
             _context = context;
         }
-        [BindProperty(SupportsGet = true)]
-        public string? SearchString { get; set; }
-        public Searching Searching { get; set; }
+
         public IList<Book> Books { get; set; }
         public IList<Author> Author { get; set; }
         public IList<Categories> Category { get; set; }
@@ -73,41 +68,7 @@ namespace ProjectBasora.Pages
                  .OrderBy(s => s.BookId)
                  .ToListAsync();
 
-            var book = from m in _context.Books
-                       select m;
 
-            if (!String.IsNullOrEmpty(SearchString))
-            {
-                book = book.Where(s => s.Title!.Contains(SearchString));
-                var searchedbooks = book.Count();
-
-                if (searchedbooks > 0)
-                {
-                    Searching searching = new Searching
-                    {
-                        Result = SearchString,
-                        Find = true
-                    };
-                    _context.Searchings.Add(searching);
-                    await _context.SaveChangesAsync();
-                }
-                else
-                {
-                    Searching searching = new Searching
-                    {
-                        Result = SearchString,
-                        Find = false
-                    };
-                    _context.Searchings.Add(searching);
-                    await _context.SaveChangesAsync();
-                }
-
-             
-            }
-            Books = await book.ToListAsync();
-         
-
-            
             foreach (Author i in _context.Authors)
             {
                 if (BooksAndAuthors.FirstOrDefault(c => c.AuthorId == i.AuthorId) == null)
@@ -152,7 +113,7 @@ namespace ProjectBasora.Pages
             }
             _context.SaveChanges();
         }
-    
+
         public async Task<IActionResult> OnGetThumbnail(string filename, ThumbnailType type = ThumbnailType.Square)
         {
             Book file = await _context.Books
@@ -173,24 +134,8 @@ namespace ProjectBasora.Pages
                 return File(thumbnail.Blob, file.ContentType);
             }
             return NotFound("no thumbnail for this file");
-            
+
 
         }
-
-        //public async Task<IActionResult> Search(string searchString)
-        //{
-        //    var book = from m in _context.Books
-        //               select m;
-
-        //    if (!String.IsNullOrEmpty(searchString))
-        //    {
-        //        book = book.Where(s => s.Title!.Contains(searchString));
-        //    }
-        //    Books = await book.ToListAsync();
-        //    _context.SaveChanges();
-        //    return Page();
-        //}
-
-        
     }
 }

@@ -47,19 +47,19 @@ namespace ProjectBasora.Models
         
         public string City { get; set; }
 
+        //public string State { get; set; }
         public string State { get; set; }
-        //public List<string>? State = new List<string>();
 
         public int PostCode { get; set; }
       
-        public bool Vertification { get; set; } = false;
-        public string UserType { get; set; } 
-        public string IDtype { get; set; }
-        public int IDnumber { get; set; }
-        public int Limit { get; set; }  
-        public int AmmountOfdelayed { get; set; }
-        public int AmmountOfInTime { get; set; }
-        public int AmmountOfActions { get; set; }
+        public bool? Vertification { get; set; } = false;
+        public string? UserType { get; set; } 
+        public string? IDtype { get; set; }
+        public int? IDnumber { get; set; }
+        public int? Limit { get; set; }  
+        public int? AmmountOfdelayed { get; set; }
+        public int? AmmountOfInTime { get; set; }
+        public int? AmmountOfActions { get; set; }
         //public List<Borrowing> Renters { get; set; }
         //public List<Borrowing> Users { get; set; }
         //public ICollection<UserReview_user> UserReview_user { get; set; }

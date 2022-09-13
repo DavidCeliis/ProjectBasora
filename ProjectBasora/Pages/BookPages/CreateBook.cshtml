@@ -11,53 +11,53 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Book.Title" class="control-label"></label>
-                <input asp-for="Book.Title" class="form-control" />
-                <span asp-validation-for="Book.Title" class="text-danger"></span>
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Book.ISBN" class="control-label"></label>
-                <input asp-for="Book.ISBN" class="form-control" />
-                <span asp-validation-for="Book.ISBN" class="text-danger"></span>
+                <label asp-for="ISBN" class="control-label"></label>
+                <input asp-for="ISBN" class="form-control" />
+                <span asp-validation-for="ISBN" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Book.NumberPages" class="control-label"></label>
-                <input asp-for="Book.NumberPages" class="form-control" />
-                <span asp-validation-for="Book.NumberPages" class="text-danger"></span>
+                <label asp-for="NumberPages" class="control-label"></label>
+                <input asp-for="NumberPages" class="form-control" />
+                <span asp-validation-for="NumberPages" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Book.Weight" class="control-label"></label>
-                <input asp-for="Book.Weight" class="form-control" />
-                <span asp-validation-for="Book.Weight" class="text-danger"></span>
+                <label asp-for="Weight" class="control-label"></label>
+                <input asp-for="Weight" class="form-control" />
+                <span asp-validation-for="Weight" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Book.BookBinding" class="control-label"></label>
-                <input asp-for="Book.BookBinding" class="form-control" />
-                <span asp-validation-for="Book.BookBinding" class="text-danger"></span>
+                <label asp-for="BookBinding" class="control-label"></label>
+                <input asp-for="BookBinding" class="form-control" />
+                <span asp-validation-for="BookBinding" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="BooksAndAuthorsNoList.AuthorId" class="control-label"></label>
-                <select asp-for="BooksAndAuthorsNoList.AuthorId" class="form-control" asp-items="ViewBag.AuthorId"></select>
+      @*      <div class="form-group">
+                <label asp-for="BooksAndAuthors.AuthorId" class="control-label"></label>
+                <select asp-for="BooksAndAuthors.AuthorId" class="form-control" asp-items="ViewBag.AuthorId"></select>
             </div>
 
             <div class="form-group">
-                <label asp-for="BooksAndLanguagesNoList.LanguageId" class="control-label"></label>
-                <select asp-for="BooksAndLanguagesNoList.LanguageId" class="form-control" asp-items="ViewBag.LanguageId"></select>
+                <label asp-for="BooksAndLanguages.LanguageId" class="control-label"></label>
+                <select asp-for="BooksAndLanguages.LanguageId" class="form-control" asp-items="ViewBag.LanguageId"></select>
             </div>
 
             <div class="form-group">
-                <label asp-for="BooksAndCategoriesNoList.CategoryId" class="control-label"></label>
-                <select asp-for="BooksAndCategoriesNoList.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
-            </div>
+                <label asp-for="BooksAndCategories.CategoryId" class="control-label"></label>
+                <select asp-for="BooksAndCategories.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+            </div>*@
                <div class="form-group">
                     <label asp-for="UploadImage" class="control-label">Image</label>
                     <input type="file" asp-for="UploadImage" class="form-control-file" multiple required accept=".png,.jpg,.jpeg,.gif" />
                 </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" @*asp-route-bookId="Book.BookId" *@/>
             </div>
         </form>
     </div>
@@ -67,8 +67,8 @@
     <a asp-page="../Index">Back to List</a>
 </div>
 
-@section Scripts {
+@*@section Scripts {
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
-}
+}*@
