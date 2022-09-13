@@ -17,17 +17,34 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Book.Title)
         </dd>
+        @if(Model.Book.Description != null){
+            <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.Description)
+            </dd>
+        }
+        else
+        {
+                 <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.Description)
+        </dt>
+        <dd class="col-sm-10">
+            No description was provided
+            </dd>
+        }
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Book.ISBN)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Book.ISBN)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.ContentType)
+            <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.BooksAndAuthors)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Book.ContentType)
+            @Html.DisplayFor(model => model.Book.BooksAndAuthors)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Book.NumberPages)
@@ -63,7 +80,7 @@
             @Html.DisplayNameFor(model => model.Book.User)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Book.User.Id)
+            @Html.DisplayFor(model => model.Book.User.UserNick)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Book.UploadedAt)
@@ -71,6 +88,26 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Book.UploadedAt)
         </dd>
+  <dt class="col-sm-2">
+            Image
+        </dt>
+        <dd class="col-sm-10">
+
+                
+              @if(Model.Book.fileName != null)
+                        {
+                            <a asp-page-handler="thumbnail" asp-route-filename="@Model.Book.BookId" asp-route-type="1"><img style="width:100px; height:100px;" src="@Url.Page("./Index", "Thumbnail", new { filename = Model.Book.BookId })" /></a>
+                        }
+                        else
+                        {
+                            <img  style="width:100px; height:100px;"src="/images/no-image-available.jpg"/>
+                           
+                        }
+                        
+        </dd>
+
+
+        
     </dl>
 </div>
 <div>

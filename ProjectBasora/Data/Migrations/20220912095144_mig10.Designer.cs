@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectBasora.Data;
 
@@ -11,9 +12,10 @@ using ProjectBasora.Data;
 namespace ProjectBasora.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220912095144_mig10")]
+    partial class mig10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -280,7 +282,7 @@ namespace ProjectBasora.Data.Migrations
                             Id = "owner1",
                             AccessFailedCount = 0,
                             City = "Madrid",
-                            ConcurrencyStamp = "bb81e854-732d-4aa6-9479-cd5e6921143a",
+                            ConcurrencyStamp = "7fa0b02b-91ba-49b4-9f61-3897724a47e9",
                             Email = "davceli019@pslib.cz",
                             EmailConfirmed = false,
                             IDnumber = 1,
@@ -290,7 +292,7 @@ namespace ProjectBasora.Data.Migrations
                             PasswordHash = "",
                             PhoneNumberConfirmed = false,
                             PostCode = 23344,
-                            SecurityStamp = "5d7ee4d6-aefa-4a0a-8fd9-5fa50bdc22c4",
+                            SecurityStamp = "fbe33da1-7a96-4494-a844-b25d45319470",
                             State = "Spain",
                             Street = "Gen. Svob",
                             TwoFactorEnabled = false,
@@ -440,7 +442,7 @@ namespace ProjectBasora.Data.Migrations
                             NumberPages = 224,
                             Public = true,
                             Title = "1984",
-                            UploadedAt = new DateTime(2022, 9, 13, 11, 10, 2, 662, DateTimeKind.Local).AddTicks(793),
+                            UploadedAt = new DateTime(2022, 9, 12, 11, 51, 43, 753, DateTimeKind.Local).AddTicks(9425),
                             UserId = "owner1"
                         });
                 });
@@ -716,10 +718,11 @@ namespace ProjectBasora.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SearchId"), 1L, 1);
 
-                    b.Property<bool?>("Find")
-                        .HasColumnType("bit");
+                    b.Property<string>("FailedS")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Result")
+                    b.Property<string>("SuccesedS")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

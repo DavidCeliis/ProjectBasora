@@ -16,6 +16,7 @@ namespace ProjectBasora.Models
         public int NumberPages { get; set; }
         public int? Weight { get; set; }
         public string? BookBinding { get; set; }
+        public string? Description { get; set; }
         public ICollection<Thumbnail>? Thumbnails { get; set; }
         
         //public ICollection<UserReview_book>? UserReview_book { get; set; }

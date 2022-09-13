@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectBasora.Data;
 
@@ -11,9 +12,10 @@ using ProjectBasora.Data;
 namespace ProjectBasora.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220909101937_mig9")]
+    partial class mig9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -280,7 +282,7 @@ namespace ProjectBasora.Data.Migrations
                             Id = "owner1",
                             AccessFailedCount = 0,
                             City = "Madrid",
-                            ConcurrencyStamp = "bb81e854-732d-4aa6-9479-cd5e6921143a",
+                            ConcurrencyStamp = "e8a025f2-ad27-4a5f-bc4c-adf48f9e7503",
                             Email = "davceli019@pslib.cz",
                             EmailConfirmed = false,
                             IDnumber = 1,
@@ -290,7 +292,7 @@ namespace ProjectBasora.Data.Migrations
                             PasswordHash = "",
                             PhoneNumberConfirmed = false,
                             PostCode = 23344,
-                            SecurityStamp = "5d7ee4d6-aefa-4a0a-8fd9-5fa50bdc22c4",
+                            SecurityStamp = "0525b783-e317-4a1a-b479-c42105bf3694",
                             State = "Spain",
                             Street = "Gen. Svob",
                             TwoFactorEnabled = false,
@@ -385,9 +387,6 @@ namespace ProjectBasora.Data.Migrations
                     b.Property<string>("ContentType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ISBN")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -440,7 +439,7 @@ namespace ProjectBasora.Data.Migrations
                             NumberPages = 224,
                             Public = true,
                             Title = "1984",
-                            UploadedAt = new DateTime(2022, 9, 13, 11, 10, 2, 662, DateTimeKind.Local).AddTicks(793),
+                            UploadedAt = new DateTime(2022, 9, 9, 12, 19, 36, 342, DateTimeKind.Local).AddTicks(9335),
                             UserId = "owner1"
                         });
                 });
@@ -716,10 +715,11 @@ namespace ProjectBasora.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SearchId"), 1L, 1);
 
-                    b.Property<bool?>("Find")
-                        .HasColumnType("bit");
+                    b.Property<string>("FailedS")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Result")
+                    b.Property<string>("SuccesedS")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

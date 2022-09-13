@@ -6,7 +6,8 @@ namespace ProjectBasora.Models
     {
         [Key]
         public int SearchId { get; set; }
-        public string FailedS { get; set; }
-        public string SuccesedS { get; set; }
+        public string Result { get; set; }
+        public bool? Find { get; set; }
+
     }
 }

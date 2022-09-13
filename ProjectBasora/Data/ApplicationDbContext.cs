@@ -17,6 +17,9 @@ namespace ProjectBasora.Data
         public DbSet<Borrowing> Borrowing { get; set; }
         public DbSet<Searching> Searchings { get; set; }
         public DbSet<LogBook> LogBooks { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<Thumbnail> Thumbnails { get; set; }    
         //public DbSet<UserReview_book> UserReviewsBooks { get; set; }
         //public DbSet<UserReview_bookCondition> UserReview_BookConditions { get; set; }
         //public DbSet<UserReview_user> UserReview_Users { get; set; }
@@ -189,14 +192,14 @@ namespace ProjectBasora.Data
             mb.Entity<Author>().HasData(new Author { AuthorId = 5, AuthorName = "Harold Robbins" });
             mb.Entity<Author>().HasData(new Author { AuthorId = 6, AuthorName = "George Orwell" });
 
-            mb.Entity<ApplicationUser>().HasData(new ApplicationUser { UserSurname ="David", UserLastname = "Celis", UserNick = "OWNERcelis", Street="Gen. Svob", City="Madrid", State = "Spain" , PostCode= 23344, Vertification = true, UserType="OWNER", IDtype="", IDnumber= 1, Limit= 10000, UserName ="davceli019@pslib.cz", Email= "davceli019@pslib.cz", PasswordHash="", Id="owner1" });
+            mb.Entity<ApplicationUser>().HasData(new ApplicationUser { UserSurname ="David", UserLastname = "Celis", State = "Spain",UserNick = "OWNERcelis", Street="Gen. Svob", City="Madrid",  PostCode= 23344, Vertification = true, UserType="OWNER", IDtype="", IDnumber= 1, Limit= 10000, UserName ="davceli019@pslib.cz", Email= "davceli019@pslib.cz", PasswordHash="", Id="owner1" });
 
             mb.Entity<Book>().HasData(new Book { BookId = 1, Title = "1984", ISBN= "9780140862539", Public = true, Borrowed = false, UploadedAt = DateTime.Now, BookBinding = "soft", NumberPages = 224, UserId= "owner1" });
 
             mb.Entity<BooksAndAuthors>().HasData(new BooksAndAuthors { AuthorId = 6, BookId =1, UserId ="owner1" });
 
-           
 
+            mb.Entity<Country>().HasData(new Country { Id = 1, Name = "Spain" });
 
 
 

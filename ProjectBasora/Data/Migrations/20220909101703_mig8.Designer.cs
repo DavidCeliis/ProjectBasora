@@ -12,7 +12,7 @@ using ProjectBasora.Data;
 namespace ProjectBasora.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220906085747_mig8")]
+    [Migration("20220909101703_mig8")]
     partial class mig8
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -287,7 +287,7 @@ namespace ProjectBasora.Data.Migrations
                             AmmountOfInTime = 0,
                             AmmountOfdelayed = 0,
                             City = "Madrid",
-                            ConcurrencyStamp = "f5acba12-af72-4ced-b761-800e3df0d116",
+                            ConcurrencyStamp = "4ac8844e-9dbb-42ad-98c2-74fb2d2890a8",
                             Email = "davceli019@pslib.cz",
                             EmailConfirmed = false,
                             IDnumber = 1,
@@ -297,7 +297,7 @@ namespace ProjectBasora.Data.Migrations
                             PasswordHash = "",
                             PhoneNumberConfirmed = false,
                             PostCode = 23344,
-                            SecurityStamp = "9ede5a45-47b6-4013-b60d-16678abb0039",
+                            SecurityStamp = "c5630694-5637-4c3f-b063-7669686b5559",
                             State = "Spain",
                             Street = "Gen. Svob",
                             TwoFactorEnabled = false,
@@ -419,6 +419,9 @@ namespace ProjectBasora.Data.Migrations
                     b.Property<int?>("Weight")
                         .HasColumnType("int");
 
+                    b.Property<string>("fileName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("BookId");
 
                     b.HasIndex("Author");
@@ -441,7 +444,7 @@ namespace ProjectBasora.Data.Migrations
                             NumberPages = 224,
                             Public = true,
                             Title = "1984",
-                            UploadedAt = new DateTime(2022, 9, 6, 10, 57, 46, 207, DateTimeKind.Local).AddTicks(8922),
+                            UploadedAt = new DateTime(2022, 9, 9, 12, 17, 2, 767, DateTimeKind.Local).AddTicks(7026),
                             UserId = "owner1"
                         });
                 });
@@ -455,7 +458,6 @@ namespace ProjectBasora.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("AuthorId", "BookId");
@@ -603,6 +605,30 @@ namespace ProjectBasora.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ProjectBasora.Models.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Spain"
+                        });
+                });
+
             modelBuilder.Entity("ProjectBasora.Models.Languages", b =>
                 {
                     b.Property<int>("LanguageId")
@@ -721,7 +747,7 @@ namespace ProjectBasora.Data.Migrations
 
                     b.HasKey("BookId", "Type");
 
-                    b.ToTable("Thumbnail");
+                    b.ToTable("Thumbnails");
                 });
 
             modelBuilder.Entity("ProjectBasora.Models.UserAndBorrow", b =>
@@ -1011,9 +1037,7 @@ namespace ProjectBasora.Data.Migrations
 
                     b.HasOne("ProjectBasora.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Author");
 
