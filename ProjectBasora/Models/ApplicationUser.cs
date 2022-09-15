@@ -25,7 +25,8 @@ namespace ProjectBasora.Models
         public ICollection<UserAndBorrow>? UserAndBorrowRenters { get; set; }
         public ICollection<UserAndBorrow>? UserAndBorrowUsers { get; set; }
 
-      
+        public ICollection<UserAndBorrowFinal>? UserAndBorrowRentersFinal { get; set; }
+        public ICollection<UserAndBorrowFinal>? UserAndBorrowUsersFinal { get; set; }
         public ICollection<UserReview_bookRelation>? UserReview_bookRelationUsers { get; set; }
 
         public ICollection<UserReview_bookConditionRelation>? UserReview_bookConditionRelationRateds { get; set; }
@@ -47,8 +48,16 @@ namespace ProjectBasora.Models
         
         public string City { get; set; }
 
-        //public string State { get; set; }
         public string State { get; set; }
+        //public enum State { 
+        //    Spain,
+        //    Germany,
+        //    Poland,
+        //    USA,
+        //    UK,
+        //    Norway
+        
+        //}
 
         public int PostCode { get; set; }
       

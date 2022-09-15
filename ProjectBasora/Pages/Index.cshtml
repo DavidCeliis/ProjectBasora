@@ -3,8 +3,8 @@
 @{
     ViewData["Title"] = "Home";
 }
-
-<div class="text-center">
+@*MAIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*@<div class="text-center">
     <h1>Available to Borrow</h1>
     
     <form >
@@ -14,31 +14,36 @@
     </p>
     </form>
 
+    @if(Model.AllBooks.Count > 0 ){
     @if (Model.Books.Count > 0)
     {
         <div class="grid-container">
             @foreach (var f in Model.Books)
             {
-                @if (f.fileName != null)
+                @if (f.fileName != null && f.Borrowed == false)
                 {
 
 
                     <div class="grid-item gridcontainer">
                         <a asp-page="./BookPages/DetailsBook" asp-route-id="@f.BookId"><img class="PICthumbnail" src="@Url.Page("/Index", "Thumbnail", new { filename = f.BookId })" /></a>
                         <p style="text-align:center; padding-top:5px">@f.Title</p>
-                        <small>Uploaded by: <strong>@f.User.UserNick</strong></small>
+                        <small>Uploaded by: <strong>@f.User.UserName</strong></small>
                     </div>
                 }
-                else
+                else if(f.Borrowed == false)
                 {
                     <div class="grid-item gridcontainer">
                         <a asp-page="./BookPages/DetailsBook" asp-route-id="@f.BookId"> <img class="PICthumbnail" src="/images/no-image-available.jpg" />  </a>
                         <p style="text-align:center;">@f.Title</p>
-                        <small>Uploaded by: <strong>@f.User.UserNick</strong></small>
-                    </div>
-                }
+                        <small>Uploaded by: <strong>@f.User.UserName</strong></small>
+                        </div>
+                    }
+                    else
+                    {
+                       
+                    }
 
-            }
+        }
 
         </div>
 
@@ -48,5 +53,12 @@
     {
           <img style="width:200px; height:200px; text-align:center" src="/images/nothing-found.png" />
         <h1 style="text-align:center; color:black;">Try something else...</h1>
+        <a class="button"style="text-align:center" asp-page="/index">Home</a>
        
+        }
+    }
+    else
+    {
+         <img style="width:200px; height:200px; text-align:center" src="/images/empty.png" />
+        <h1 style="text-align:center; color:black;">We couldn't find any data..</h1>
     }

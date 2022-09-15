@@ -1,4 +1,306 @@
 ﻿@page
-@model ProjectBasora.Pages.Users.IndexModel
+@model IndexModel
 @{
+    ViewData["Title"] = "Your page";
 }
+@*<div id="navbar">
+    <a class="active" href="#main">My books</a>
+    <a href="#borrowsped">Pending borrows</a>
+    <a href="borrows">Borrows</a>
+</div>
+    <script>
+        window.onscroll = function() {myFunction()};
+
+        var navbar = document.getElementById("navbar");
+        var sticky = navbar.offsetTop;
+
+        function myFunction() {
+          if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+          } else {
+            navbar.classList.remove("sticky");
+          }
+        }
+    </script>*@
+@*USER!!!!!!!!*@
+<div class="text-center">
+
+    <h1>Welcome @Model.AppUser.UserNick</h1>
+    <h2>Manage your library</h2>
+    <a class="button" asp-area="Identity" asp-page="/Account/Manage/Index">Settings<i class="fa fa-gear" aria-hidden="true" style="font-size:12px; padding-left:5px"></i></a>
+    <a class="button" asp-page="../BookPages/CreateBook">Add book</a>
+
+    <form>
+        <p>
+            Title: <input type="text" asp-for="SearchString" />
+            <input type="submit" value="Filter" />
+        </p>
+    </form>
+
+    @if (Model.AllBooks.Count > 0)
+    {
+        @if (Model.Books.Count > 0)
+        {
+            <div id="main" class="grid-container">
+                @foreach (var f in Model.Books)
+                {
+                    @if (f.fileName != null)
+                    {
+
+
+                        <div class="grid-item gridcontainer">
+                            <a asp-page="../BookPages/DetailsBook" asp-route-id="@f.BookId"><img class="PICthumbnail" src="@Url.Page("/Index", "Thumbnail", new { filename = f.BookId })" /></a>
+                            <p style="text-align:center; padding-top:5px">@f.Title</p>
+                            <span>
+                                <a class="button buttonDanger" asp-page="../BookPages/DeleteBook" asp-route-id="@f.BookId"><i class="fa fa-trash" aria-hidden="true" style="font-size:24px"></i></a>
+                                <a class="button" asp-page="../BookPages/EditBook" asp-route-id="@f.BookId">Edit</a>
+
+
+                                <small>
+                                    Status:
+                                    @if (f.Borrowed == false)
+                                    {
+                                        <strong>Not borrowed</strong>
+                                    }
+                                    else
+                                    {
+                                        <strong>Borrowed</strong>
+                                    }
+                                </small>
+                            </span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="grid-item gridcontainer">
+                            <a asp-page="./BookPages/DetailsBook" asp-route-id="@f.BookId"> <img class="PICthumbnail" src="/images/no-image-available.jpg" />  </a>
+
+                            <span>
+                                <a class="button bottom-right2 buttonDanger" asp-page="../BookPages/DeleteBook" asp-route-id="@f.BookId"><i class="fa fa-trash" aria-hidden="true" style="font-size:24px"></i></a>
+                                <a class="button bottom-left" asp-page="../BookPages/EditBook" asp-route-id="@f.BookId">Edit</a>
+
+                                <p style="text-align:center; padding-top:5px">@f.Title</p>
+                                <small>
+                                    Status:
+                                    @if (f.Borrowed == false)
+                                    {
+                                        <strong>Not borrowed</strong>
+                                    }
+                                    else
+                                    {
+                                        <strong>Borrowed</strong>
+                                    }
+                                </small>
+                            </span>
+                        </div>
+                    }
+
+                }
+
+            </div>
+
+        }
+
+        else
+        {
+            <img style="width:200px; height:200px; text-align:center" src="/images/nothing-found.png" />
+            <h1 style="text-align:center; color:black;">Try something else...</h1>
+
+        }
+
+    }
+    else
+    {
+        <img style="width:200px; height:200px; text-align:center" src="/images/empty.png" />
+        <p style="text-align:center; color:black;">You didn't upload any book... :(</p>
+    }
+
+    <h1 id="borrowsped">Borrows pending</h1>
+    @if (Model.UserAndBorrow.Count > 0)
+    {
+
+        <div class="grid-container">
+            @foreach (var f in Model.UserAndBorrow)
+            {
+                @if (f.User == Model.AppUser)
+                {
+                    @if (f.Return == false)
+                    {
+                        <div class="grid-item gridcontainer">
+                            <a asp-page="../BookPages/DetailsBook" asp-route-id="@f.BookId"><img class="PICthumbnail" src="@Url.Page("/Index", "Thumbnail", new { filename = f.BookId })" /></a>
+
+                            <p style="text-align:center; padding-top:5px">@f.Book.Title</p>
+
+
+                            <p>From: @f.Renter.UserNick</p>
+                            <span>Until: @f.Expire</span>
+                            @if (f.Expired == false)
+                            {
+                                <span class="dot pending"></span>
+                            }
+                            else
+                            {
+                                <span class="dot requestexpired"></span>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="grid-item gridcontainer">
+                            <p><span>Early return requested</span><span class="dot danger"></span></p>
+                            <a asp-page="../BookPages/DetailsBook" asp-route-id="@f.BookId"><img class="PICthumbnail" src="@Url.Page("/Index", "Thumbnail", new { filename = f.BookId })" /></a>
+
+                            <p style="text-align:center; padding-top:5px">@f.Book.Title</p>
+
+
+                            <p>From: @f.Renter.UserNick</p>
+                            <span>Until: @f.Expire</span>
+                            @if (f.Expired == false)
+                            {
+                                <span class="dot pending"></span>
+                            }
+                            else
+                            {
+                                <span class="dot requestexpired"></span>
+                            }
+                        </div>
+                        <form method="post" enctype="multipart/form-data">
+                            <p><input type="submit" value="Return" asp-route-id="@f.UserAndBorrowId" asp-route-bookid="@f.BookId" asp-route-response="acceptreturn" class="button buttonBlue"></p>
+                        </form>
+                    }
+                }
+                else if (f.Renter == Model.AppUser)
+                {
+                    <div class="grid-item gridcontainer">
+                        <a asp-page="../BookPages/DetailsBook" asp-route-id="@f.BookId"><img class="PICthumbnail" src="@Url.Page("/Index", "Thumbnail", new { filename = f.BookId })" /></a>
+
+                        <p style="text-align:center; padding-top:5px">@f.Book.Title</p>
+
+
+                        <p>Requested by: @f.User.UserNick</p>
+                        <span>Until: @f.Expire</span>
+                        @if (f.Expired == false && f.Expire > DateTime.Now && f.Return == false)
+                        {
+                            <span class="dot pending"></span>
+                            <form method="post" enctype="multipart/form-data">
+                                <p>
+                                    <span>
+                                        <input type="submit" value="Accept" asp-route-id="@f.UserAndBorrowId" asp-route-bookid="@f.BookId" asp-route-response="true" class="button">
+                                    </span>
+                                    <span>
+                                        <input type="submit" value="Decline" asp-route-id="@f.UserAndBorrowId" asp-route-bookid="@f.BookId" asp-route-response="false" class="button buttonDanger">
+                                    </span>
+                                </p>
+                            </form>
+                        }
+                        else if (f.Expired == true && f.Return == false && f.Expire < DateTime.Now)
+                        {
+                            <span class="dot requestexpired"></span>
+                            <form method="post" enctype="multipart/form-data">
+                                <p><input type="submit" value="Delete" asp-route-id="@f.UserAndBorrowId" asp-route-bookid="@f.BookId" asp-route-response="false" class="button buttonDanger"></p>
+                            </form>
+                        }
+                        else
+                        {
+                            <p><span class="dot pending"></span><span style="padding-left:5px">Early return requested</span></p>
+                            <form method="post" enctype="multipart/form-data">
+                                <p><input type="submit" value="Cancel" asp-route-id="@f.UserAndBorrowId" asp-route-bookid="@f.BookId" asp-route-response="true" class="button buttonDanger"></p>
+                            </form>
+                        }
+                    </div>
+                }
+
+            }
+
+        </div>
+
+    }
+
+    else
+    {
+        <img style="width:200px; height:200px; text-align:center" src="/images/empty.png" />
+        <p style="text-align:center; color:black;">No pendings right now!</p>
+
+    }
+
+
+
+
+
+
+
+    <h1 id="borrows">Borrows</h1>
+
+    @if (Model.UserAndBorrowFinal.Count > 0)
+    {
+
+        <div class="grid-container">
+            @foreach (var f in Model.UserAndBorrowFinal)
+            {
+                @if (f.User == Model.AppUser)
+                {
+
+                    <div class="grid-item gridcontainer">
+                        <a asp-page="../BookPages/DetailsBook" asp-route-id="@f.BookId"><img class="PICthumbnail" src="@Url.Page("/Index", "Thumbnail", new { filename = f.BookId })" /></a>
+
+                        <p style="text-align:center; padding-top:5px">@f.Book.Title</p>
+
+
+                        <p>From: @f.Renter.UserNick</p>
+                        <span>Until: @f.Expire</span>
+                        @if (f.Expired == false)
+                        {
+                            <span class="dot pending"></span>
+                        }
+                        else
+                        {
+                            <span class="dot requestexpired"></span>
+                        }
+                    </div>
+                }
+                else if (f.Renter == Model.AppUser)
+                {
+                    <div class="grid-item gridcontainer">
+                        <a asp-page="../BookPages/DetailsBook" asp-route-id="@f.BookId"><img class="PICthumbnail" src="@Url.Page("/Index", "Thumbnail", new { filename = f.BookId })" /></a>
+
+                        <p style="text-align:center; padding-top:5px">@f.Book.Title</p>
+
+
+                        <p>Requested by: @f.User.UserNick</p>
+                        <span>Until: @f.Expire</span>
+                        @if (f.Expired == false)
+                        {
+                            <span class="dot succes"></span>
+
+                        }
+                        else
+                        {
+                            <span class="dot danger"></span>
+
+                        }
+                        <p>
+                            <span>
+                                <a href="https://www.fedex.com/shipping/shipEntryAction.do?method=doEntry&link=1&locale=en_US&urlparams=us&sType=F" target="_blank" class="button buttonBlue">Send</a>
+                            </span>
+                            <span style="padding-left: 5px">
+                                <form method="post" enctype="multipart/form-data">
+                                    <input type="submit" value="Request an earlier return" asp-route-id="@f.UserAndBorrowFinalId" asp-route-bookid="@f.BookId" asp-route-response="return" class="button buttonBlue">
+                                </form>
+                            </span>
+                        </p>
+                    </div>
+                }
+
+            }
+
+        </div>
+
+    }
+
+    else
+    {
+        <img style="width:200px; height:200px; text-align:center" src="/images/empty.png" />
+        <p style="text-align:center; color:black;">You didn't borrow anything yet</p>
+
+    }
+

@@ -20,6 +20,8 @@ namespace ProjectBasora.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Thumbnail> Thumbnails { get; set; }    
+        public DbSet<UserAndBorrow> UserAndBorrows { get; set; }
+        public DbSet<UserAndBorrowFinal> UserAndBorrowsFinal { get; set; }
         //public DbSet<UserReview_book> UserReviewsBooks { get; set; }
         //public DbSet<UserReview_bookCondition> UserReview_BookConditions { get; set; }
         //public DbSet<UserReview_user> UserReview_Users { get; set; }
@@ -41,12 +43,12 @@ namespace ProjectBasora.Data
             mb.Entity<BooksAndAuthors>()
                 .HasOne(bc => bc.Book)
                 .WithMany(b => b.BooksAndAuthors)
-                .HasForeignKey(bc => bc.BookId).OnDelete(DeleteBehavior.NoAction);
+                .HasForeignKey(bc => bc.BookId);
 
             mb.Entity<BooksAndAuthors>()
                 .HasOne(bc => bc.Author)
                 .WithMany(c => c.BooksAndAuthors)
-                .HasForeignKey(bc => bc.AuthorId).OnDelete(DeleteBehavior.NoAction);
+                .HasForeignKey(bc => bc.AuthorId);
 
             mb.Entity<BooksAndLanguages>()
               .HasKey(bc => new { bc.LanguageId, bc.BookId });
@@ -73,25 +75,42 @@ namespace ProjectBasora.Data
 
 
             mb.Entity<UserAndBorrow>()
-               .HasKey(bc => new { bc.RenterId, bc.BookId, bc.UserId, bc.BorrowingId });
+               .HasKey(bc => new { bc.RenterId, bc.BookId, bc.UserId, bc.UserAndBorrowId });
             mb.Entity<UserAndBorrow>()
                 .HasOne(bc => bc.Book)
                 .WithMany(b => b.UserAndBorrow)
-                .HasForeignKey(bc => bc.BookId).OnDelete(DeleteBehavior.NoAction);
+                .HasForeignKey(bc => bc.BookId).OnDelete(DeleteBehavior.ClientCascade);
             mb.Entity<UserAndBorrow>()
                 .HasOne(bc => bc.Renter)
                 .WithMany(c => c.UserAndBorrowRenters)
                 .HasForeignKey(bc => bc.RenterId)
-                .HasPrincipalKey(t => t.Id).OnDelete(DeleteBehavior.NoAction);
+                .HasPrincipalKey(t => t.Id).OnDelete(DeleteBehavior.ClientCascade);
             mb.Entity<UserAndBorrow>()
               .HasOne(bc => bc.User)
               .WithMany(c => c.UserAndBorrowUsers)
               .HasForeignKey(bc => bc.UserId)
-              .HasPrincipalKey(t => t.Id).OnDelete(DeleteBehavior.NoAction);
-            mb.Entity<UserAndBorrow>()
-             .HasOne(bc => bc.Borrowing)
-             .WithMany(c => c.UserAndBorrow)
-             .HasForeignKey(bc => bc.BorrowingId).OnDelete(DeleteBehavior.NoAction);
+              .HasPrincipalKey(t => t.Id).OnDelete(DeleteBehavior.ClientCascade);
+
+            mb.Entity<UserAndBorrowFinal>()
+          .HasKey(bc => new { bc.RenterId, bc.BookId, bc.UserId, bc.UserAndBorrowFinalId });
+            mb.Entity<UserAndBorrowFinal>()
+                .HasOne(bc => bc.Book)
+                .WithMany(b => b.UserAndBorrowFinal)
+                .HasForeignKey(bc => bc.BookId).OnDelete(DeleteBehavior.ClientCascade);
+            mb.Entity<UserAndBorrowFinal>()
+                .HasOne(bc => bc.Renter)
+                .WithMany(c => c.UserAndBorrowRentersFinal)
+                .HasForeignKey(bc => bc.RenterId)
+                .HasPrincipalKey(t => t.Id).OnDelete(DeleteBehavior.ClientCascade);
+            mb.Entity<UserAndBorrowFinal>()
+              .HasOne(bc => bc.User)
+              .WithMany(c => c.UserAndBorrowUsersFinal)
+              .HasForeignKey(bc => bc.UserId)
+              .HasPrincipalKey(t => t.Id).OnDelete(DeleteBehavior.ClientCascade);
+            //mb.Entity<UserAndBorrow>()
+            // .HasOne(bc => bc.Borrowing)
+            // .WithMany(c => c.UserAndBorrow)
+            // .HasForeignKey(bc => bc.BorrowingId).OnDelete(DeleteBehavior.NoAction);
 
 
             mb.Entity<UserReview_bookRelation>()
@@ -192,14 +211,14 @@ namespace ProjectBasora.Data
             mb.Entity<Author>().HasData(new Author { AuthorId = 5, AuthorName = "Harold Robbins" });
             mb.Entity<Author>().HasData(new Author { AuthorId = 6, AuthorName = "George Orwell" });
 
-            mb.Entity<ApplicationUser>().HasData(new ApplicationUser { UserSurname ="David", UserLastname = "Celis", State = "Spain",UserNick = "OWNERcelis", Street="Gen. Svob", City="Madrid",  PostCode= 23344, Vertification = true, UserType="OWNER", IDtype="", IDnumber= 1, Limit= 10000, UserName ="davceli019@pslib.cz", Email= "davceli019@pslib.cz", PasswordHash="", Id="owner1" });
+            //mb.Entity<ApplicationUser>().HasData(new ApplicationUser { UserSurname ="David", UserLastname = "Celis", State = "Spain",UserNick = "OWNERcelis", Street="Gen. Svob", City="Madrid",  PostCode= 23344, Vertification = true, UserType="OWNER", IDtype="", IDnumber= 1, Limit= 10000, UserName ="davceli019@pslib.cz", Email= "davceli019@pslib.cz", PasswordHash="", Id="owner1" });
 
-            mb.Entity<Book>().HasData(new Book { BookId = 1, Title = "1984", ISBN= "9780140862539", Public = true, Borrowed = false, UploadedAt = DateTime.Now, BookBinding = "soft", NumberPages = 224, UserId= "owner1" });
+            //mb.Entity<Book>().HasData(new Book { BookId = 1, Title = "1984", ISBN= "9780140862539", Public = true, Borrowed = false, UploadedAt = DateTime.Now, BookBinding = "soft", NumberPages = 224, UserId= "48a90fc3-30ac-4dd0-81c8-34fb897747ad" });
 
-            mb.Entity<BooksAndAuthors>().HasData(new BooksAndAuthors { AuthorId = 6, BookId =1, UserId ="owner1" });
+            //mb.Entity<BooksAndAuthors>().HasData(new BooksAndAuthors { AuthorId = 6, BookId =1, UserId = "48a90fc3-30ac-4dd0-81c8-34fb897747ad" });
 
 
-            mb.Entity<Country>().HasData(new Country { Id = 1, Name = "Spain" });
+            //mb.Entity<Country>().HasData(new Country { Id = 1, Name = "Spain" });
 
 
 

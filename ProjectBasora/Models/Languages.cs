@@ -9,13 +9,13 @@ namespace ProjectBasora.Models
         public int LanguageId {get;set;}
         public string LanguageName {get;set;}
         //public Book Book {get;set;}
-        public ICollection<BooksAndLanguages> BooksAndLanguages {get;set;}
+        public ICollection<BooksAndLanguages>? BooksAndLanguages {get;set;}
 
         [ForeignKey("UserId")]
         public ApplicationUser? User { get; set; }
         public string? UserId { get; set; }
 
-        [ForeignKey("Book")]
-        public Book? BookInclude { get; set; }
+        //[ForeignKey("Book")]
+        //public Book? BookInclude { get; set; }
     }
 }

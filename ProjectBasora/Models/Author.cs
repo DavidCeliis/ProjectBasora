@@ -8,8 +8,8 @@ namespace ProjectBasora.Models
         [Key]
         public int AuthorId { get; set; }
         public string AuthorName { get; set; }
-        [ForeignKey("Book")]
-        public Book? BookIncludeAuthors { get; set; }
+        //[ForeignKey("Book")]
+        //public Book? BookIncludeAuthors { get; set; }
         public ICollection<BooksAndAuthors> BooksAndAuthors { get; set; }
 
         [ForeignKey("UserId")]

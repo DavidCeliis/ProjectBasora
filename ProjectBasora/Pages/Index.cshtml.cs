@@ -24,8 +24,12 @@ namespace ProjectBasora.Pages
         }
         [BindProperty(SupportsGet = true)]
         public string? SearchString { get; set; }
+        public SelectList? AuthorsList { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string? SearchAuthors { get; set; }
         public Searching Searching { get; set; }
         public IList<Book> Books { get; set; }
+        public IList<Book> AllBooks { get; set; }
         public IList<Author> Author { get; set; }
         public IList<Categories> Category { get; set; }
         public IList<Languages> Language { get; set; }
@@ -41,11 +45,19 @@ namespace ProjectBasora.Pages
         public string ErrorMessage { get; set; }
         public async Task OnGetAsync()
         {
+            AllBooks = await _context.Books
+                .Include(s => s.User)
+                .Include(s => s.BooksAndAuthors)
+                .Include(s => s.BooksAndCategories)
+                .Include(s => s.BooksAndLanguages)
+                .Where(s => s.Borrowed == false)
+                .ToListAsync();
             Books = await _context.Books
                 .Include(s => s.User)
                 .Include(s => s.BooksAndAuthors)
                 .Include(s => s.BooksAndCategories)
                 .Include(s => s.BooksAndLanguages)
+                .Where(s => s.Borrowed == false)
                 .ToListAsync();
             Author = await _context.Authors
                 .Include(s => s.BooksAndAuthors)
@@ -73,6 +85,9 @@ namespace ProjectBasora.Pages
                  .OrderBy(s => s.BookId)
                  .ToListAsync();
 
+            //IQueryable<string> AuthorQuery = from m in _context.Books
+            //                                orderby m.BooksAndAuthors
+            //                                select m.BooksAndAuthors;
             var book = from m in _context.Books
                        select m;
 
@@ -107,49 +122,8 @@ namespace ProjectBasora.Pages
             Books = await book.ToListAsync();
          
 
-            
-            foreach (Author i in _context.Authors)
-            {
-                if (BooksAndAuthors.FirstOrDefault(c => c.AuthorId == i.AuthorId) == null)
-                {
-                    i.BookIncludeAuthors = null;
-                }
-                else
-                {
-                    BooksAndAuthorsNoList = BooksAndAuthors.First(c => c.AuthorId == i.AuthorId);
-                    i.BookIncludeAuthors = BooksAndAuthorsNoList.Book;
-                }
 
-
-            }
-            foreach (Languages i in _context.Languages)
-            {
-                if (BooksAndLanguages.FirstOrDefault(c => c.LanguageId == i.LanguageId) == null)
-                {
-                    i.BookInclude = null;
-                }
-                else
-                {
-                    BooksAndLanguagesNoList = BooksAndLanguages.First(c => c.LanguageId == i.LanguageId);
-                    i.BookInclude = BooksAndLanguagesNoList.Book;
-                }
-
-
-            }
-            foreach (Categories i in _context.Categories)
-            {
-                if (BooksAndCategories.FirstOrDefault(c => c.CategoryId == i.CategoryId) == null)
-                {
-                    i.BookInclude = null;
-                }
-                else
-                {
-                    BooksAndCategoriesNoList = BooksAndCategories.First(c => c.CategoryId == i.CategoryId);
-                    i.BookInclude = BooksAndCategoriesNoList.Book;
-                }
-
-
-            }
+          
             _context.SaveChanges();
         }
     
@@ -177,19 +151,7 @@ namespace ProjectBasora.Pages
 
         }
 
-        //public async Task<IActionResult> Search(string searchString)
-        //{
-        //    var book = from m in _context.Books
-        //               select m;
-
-        //    if (!String.IsNullOrEmpty(searchString))
-        //    {
-        //        book = book.Where(s => s.Title!.Contains(searchString));
-        //    }
-        //    Books = await book.ToListAsync();
-        //    _context.SaveChanges();
-        //    return Page();
-        //}
+  
 
         
     }

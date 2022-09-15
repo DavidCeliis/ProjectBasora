@@ -5,8 +5,10 @@ namespace ProjectBasora.Models
 {
     public class BooksAndLanguages
     {
+        [Key]
         public int LanguageId { get; set; }
         public Languages Languages { get; set; }
+        [Key]
         public int BookId { get; set; }
         public Book Book { get; set; }
 

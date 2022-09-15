@@ -4,14 +4,37 @@
 @{
     ViewData["Title"] = "Edit";
 }
+@if(Model.Book.Borrowed == true)
+{
+    <script type="text/javascript">
+        window.onload = function (){
+            alert("@Model.Book.Title is now borrowed so you can't edit it right now. Please request return first")
+            history.go(-1)
+        } 
 
-<h1>Edit</h1>
+    </script>
+    <center style="  
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    text-align:center">
+    <h1>Cant edit this right now</h1>
+    <p>@Model.Book.Title is now borrowed so you can't edit it right now. Please request return first</p>
+    <a class="button buttonBlue" asp-page="/Index">Home</a>
+    </center>
+}
+else{
+<h1>Edit book @Html.DisplayFor(model => model.Book.Title)</h1>
 
-<h4>Book</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
+                <input style="display:none;" asp-for="Book.ContentType" />
+                <input style="display:none;" asp-for="Book.Thumbnails" />
+                <input style="display:none;" asp-for="Book.UserId" />
+                <input style="display:none;" asp-for="Book.User" />
+                <input style="display:none;" asp-for="Book.UploadedAt" />
+                <input style="display:none;" asp-for="Book.fileName" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Book.BookId" />
             <div class="form-group">
@@ -24,10 +47,10 @@
                 <input asp-for="Book.ISBN" class="form-control" />
                 <span asp-validation-for="Book.ISBN" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Book.ContentType" class="control-label"></label>
-                <input asp-for="Book.ContentType" class="form-control" />
-                <span asp-validation-for="Book.ContentType" class="text-danger"></span>
+               <div class="form-group">
+                <label asp-for="Book.Description" class="control-label"></label>
+                <input asp-for="Book.Description" class="form-control" />
+                <span asp-validation-for="Book.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Book.NumberPages" class="control-label"></label>
@@ -55,16 +78,6 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="Book.UserId" class="control-label"></label>
-                <select asp-for="Book.UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                <span asp-validation-for="Book.UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Book.UploadedAt" class="control-label"></label>
-                <input asp-for="Book.UploadedAt" class="form-control" />
-                <span asp-validation-for="Book.UploadedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -72,9 +85,9 @@
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+     <a class="button buttonBlue"  href="javascript: history.go(-1)">Back</a>
 </div>
-
+}
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

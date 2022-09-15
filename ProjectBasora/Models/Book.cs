@@ -31,15 +31,16 @@ namespace ProjectBasora.Models
         //public ICollection<Borrowing>? Borrowing { get; set; }
 
         public ICollection<UserAndBorrow>? UserAndBorrow { get; set; }
+        public ICollection<UserAndBorrowFinal>? UserAndBorrowFinal { get; set; }
         public ICollection<UserReview_bookConditionRelation>? UserReview_bookConditionRelation { get; set; }
         public ICollection<UserReview_bookRelation>? UserReview_bookRelation { get; set; }
         public ICollection<UserReview_userRelation>? UserReview_userRelation { get; set; }
-        [ForeignKey("Author")]
-        public Author? AuthorIncludeBooks { get; set; }
-        [ForeignKey("Categories")]
-        public Categories? CategoryInclude { get; set; }
-        [ForeignKey("Languages")]
-        public Languages? LanguageInclude { get; set; }
+        //[ForeignKey("Author")]
+        //public Author? AuthorIncludeBooks { get; set; }
+        //[ForeignKey("Categories")]
+        //public Categories? CategoryInclude { get; set; }
+        //[ForeignKey("Languages")]
+        //public Languages? LanguageInclude { get; set; }
         public bool Public { get; set; } = true;
         public bool Borrowed { get; set; } = false;
         public string? fileName { get; set; }

@@ -48,6 +48,16 @@
                 <label asp-for="Input.State"></label>
                 <span asp-validation-for="Input.State" class="text-danger"></span>
             </div>
+@*            <div>
+                    @foreach (var v in Enum.GetValues(typeof(ApplicationUser.State)))
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" asp-for="Input.State" value="@v">
+                    <label class="form-check-label" asp-for="Input.State">@v</label>
+
+                </div>
+            }
+            </div>*@
             <div class="form-floating">
                 <input asp-for="Input.Street" class="form-control" autocomplete="Street" aria-required="true" />
                 <label asp-for="Input.Street"></label>
