@@ -3,11 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjectBasora.Models
 {
-    public class UserAndBorrow
-    { 
-       
+    public class UserAndBorrowFinal
+    {
         [Key]
-        public int UserAndBorrowId { get; set; }
+        public int UserAndBorrowFinalId { get; set; }
         [Key]
         public int BookId { get; set; }
         [ForeignKey("BookId")]

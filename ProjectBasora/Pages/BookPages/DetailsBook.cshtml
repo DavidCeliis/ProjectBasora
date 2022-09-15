@@ -111,6 +111,25 @@
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Book?.BookId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    @if(Model.Book.Borrowed == false && Model.AppUser != Model.Book.User){
+    <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="submit" value="Borrow" class="btn btn-primary" asp-route-id="@Model.Book.BookId" />
+            </div>
+        </form>
+    }
+    else if(Model.AppUser == Model.Book.User){
+        <p>This is your book</p>
+         <input type="hidden" asp-for="Book.BookId" />
+        <a class="button buttonDanger"asp-page="./EditBook" asp-route-id="@Model.Book?.BookId">Edit</a>
+    }
+    else
+    {
+        <p>This book is now borrowed</p>
+    }
+</div>
+<div>
+       <input type="hidden" asp-for="Book.BookId" />
+     
+       <a class="button buttonBlue"  href="javascript: history.go(-1)">Back</a>
 </div>

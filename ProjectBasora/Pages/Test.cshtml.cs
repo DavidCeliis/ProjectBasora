@@ -69,48 +69,48 @@ namespace ProjectBasora.Pages
                  .ToListAsync();
 
 
-            foreach (Author i in _context.Authors)
-            {
-                if (BooksAndAuthors.FirstOrDefault(c => c.AuthorId == i.AuthorId) == null)
-                {
-                    i.BookIncludeAuthors = null;
-                }
-                else
-                {
-                    BooksAndAuthorsNoList = BooksAndAuthors.First(c => c.AuthorId == i.AuthorId);
-                    i.BookIncludeAuthors = BooksAndAuthorsNoList.Book;
-                }
+            //foreach (Author i in _context.Authors)
+            //{
+            //    if (BooksAndAuthors.FirstOrDefault(c => c.AuthorId == i.AuthorId) == null)
+            //    {
+            //        i.BookIncludeAuthors = null;
+            //    }
+            //    else
+            //    {
+            //        BooksAndAuthorsNoList = BooksAndAuthors.First(c => c.AuthorId == i.AuthorId);
+            //        i.BookIncludeAuthors = BooksAndAuthorsNoList.Book;
+            //    }
 
 
-            }
-            foreach (Languages i in _context.Languages)
-            {
-                if (BooksAndLanguages.FirstOrDefault(c => c.LanguageId == i.LanguageId) == null)
-                {
-                    i.BookInclude = null;
-                }
-                else
-                {
-                    BooksAndLanguagesNoList = BooksAndLanguages.First(c => c.LanguageId == i.LanguageId);
-                    i.BookInclude = BooksAndLanguagesNoList.Book;
-                }
+            //}
+            //foreach (Languages i in _context.Languages)
+            //{
+            //    if (BooksAndLanguages.FirstOrDefault(c => c.LanguageId == i.LanguageId) == null)
+            //    {
+            //        i.BookInclude = null;
+            //    }
+            //    else
+            //    {
+            //        BooksAndLanguagesNoList = BooksAndLanguages.First(c => c.LanguageId == i.LanguageId);
+            //        i.BookInclude = BooksAndLanguagesNoList.Book;
+            //    }
 
 
-            }
-            foreach (Categories i in _context.Categories)
-            {
-                if (BooksAndCategories.FirstOrDefault(c => c.CategoryId == i.CategoryId) == null)
-                {
-                    i.BookInclude = null;
-                }
-                else
-                {
-                    BooksAndCategoriesNoList = BooksAndCategories.First(c => c.CategoryId == i.CategoryId);
-                    i.BookInclude = BooksAndCategoriesNoList.Book;
-                }
+            //}
+            //foreach (Categories i in _context.Categories)
+            //{
+            //    if (BooksAndCategories.FirstOrDefault(c => c.CategoryId == i.CategoryId) == null)
+            //    {
+            //        i.BookInclude = null;
+            //    }
+            //    else
+            //    {
+            //        BooksAndCategoriesNoList = BooksAndCategories.First(c => c.CategoryId == i.CategoryId);
+            //        i.BookInclude = BooksAndCategoriesNoList.Book;
+            //    }
 
 
-            }
+            //}
             _context.SaveChanges();
         }
 

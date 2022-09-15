@@ -30,7 +30,7 @@
                     <td>@c.User.UserName</td>
                     <td>@c.BookId</td>
                     <td>@c.Title</td>
-                    @if (c.AuthorIncludeBooks == null)
+                  @*  @if (c.AuthorIncludeBooks == null)
                     {
                         <td>No author</td>
                     }
@@ -54,7 +54,7 @@
                     else
                     {
                         <td>@c.CategoryInclude.CategoryName</td>
-                    }
+                    }*@
                     <td>@c.Borrowed</td>
                     <td>
                         @if(c.fileName != null)
@@ -96,7 +96,7 @@
                 <tr style="padding-bottom:20px">
 
                     <td>@c.AuthorName</td>
-                    @if (c.BookIncludeAuthors == null)
+                 @*   @if (c.BookIncludeAuthors == null)
                     {
                         <td>No books added yet</td>
                     }
@@ -106,7 +106,7 @@
                         <td>@c.BookIncludeAuthors.Title</td>
 
 
-                    }
+                    }*@
 
                     <td>
 

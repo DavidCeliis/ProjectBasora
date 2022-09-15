@@ -125,6 +125,16 @@ namespace ProjectBasora.Areas.Identity.Pages.Account
             public int PostCode { get; set; }
             [Required]
             public string State { get; set; }
+            //public enum State
+            //{
+            //    Spain,
+            //    Germany,
+            //    Poland,
+            //    USA,
+            //    UK,
+            //    Norway
+            //}
+
 
         }
      

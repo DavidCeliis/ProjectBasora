@@ -273,7 +273,7 @@ namespace ProjectBasora.Pages.BookPages
           
             await _context.SaveChangesAsync();
             //var bookid = _context.Books.Find().BookId;
-             return RedirectToPage("./Index");
+             return RedirectToPage("../Index");
             //return RedirectToPage("/CreateConnections?bookId=" + bookid);
         }
 
